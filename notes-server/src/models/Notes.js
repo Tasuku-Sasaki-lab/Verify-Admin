@@ -5,7 +5,6 @@ const  noteSchema = new Schema({
     csrID:{type:Number,reqiured:true},
     csrGroup:{type:Number,reqiured:true},
     CN:{type:String,reqiured:true},
-    CN:{type:String,reqiured:true},
     email:{type:String,reqiured:true},
     secret:{type:String,reqiured:true},
     status:{type:String,reqiured:true},

@@ -2,7 +2,21 @@ import { fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
 
 const apiUrl = 'http://localhost:3000/api';
-const httpClient = fetchUtils.fetchJson;
+//const httpClient = fetchUtils.fetchJson;
+
+/*
+impleRestProvider のコンストラクタの引数に httpClient を渡すことができる。 
+これにヘッダをいじる処理を実装して使うことでローカルで持っているクレデンシャルをAPIに
+ヘッダとして送ることができるようになる。
+*/
+const httpClient = (url, options = {}) => {
+  if (!options.headers) {
+      options.headers = new Headers({ Accept: 'application/json' });
+  }
+  const { token } = JSON.parse(localStorage.getItem('auth'));
+  options.headers.set('Authorization', `Bearer ${token}`);
+  return fetchUtils.fetchJson(url, options);
+};
 
 export default {
   getList: (resource, params) => {
@@ -58,7 +72,9 @@ export default {
     httpClient(`${apiUrl}/${resource}/${params.id}`, {
       method: 'PUT',
       body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ ...json, id: json._id })),
+    }).then(({ json }) => ({
+      data: { ...params.data, id: json._id },
+    })),
 
   updateMany: (resource, params) => {
     const query = {
