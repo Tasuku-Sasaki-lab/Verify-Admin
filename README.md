@@ -2,7 +2,7 @@
 
   
 
-CSR_mongo(https://github.com/tasuku-revol/CSR_mongo)に関連し、ユーザーとsecret等を管理する画面
+CSR_mongo(https://github.com/tasuku-revol/CSR_mongo) に関連し、ユーザーとsecret等を管理する画面
 
 ## DEMO
 
