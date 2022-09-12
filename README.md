@@ -39,6 +39,7 @@ cd Verify-admin
 ```bash
 
 cd notes-server
+npm init -y
 npm install fastify mongoose --save
 npm start
 
