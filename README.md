@@ -30,15 +30,6 @@ cd Verify-admin
 
 ```
 
-
-* Requirementで列挙したライブラリなどのインストール
-
-```bash
-
-pip install -r requirements.txt
-
-```
-
   
 
 * サーバーの立ち上げ
@@ -48,7 +39,7 @@ pip install -r requirements.txt
 ```bash
 
 cd notes-server
-
+npm install fastify mongoose --save
 npm start
 
 ```
@@ -64,7 +55,7 @@ npm start
 cd ~
 
 cd notes-client
-
+npm install react-admin @material-ui/core --save
 npm start
 
 ```
