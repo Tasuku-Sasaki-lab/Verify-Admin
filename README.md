@@ -152,7 +152,3 @@ adimins :
 
 * t.sasaki.revol@gmail.com
 
-## License
-
-
-"Verfy-admin" is under [ プロキューブ license](https://www.procube.info/).

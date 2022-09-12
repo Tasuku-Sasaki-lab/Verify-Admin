@@ -1,6 +1,7 @@
 import React  from "react";
 import { Create,SimpleForm,NumberInput,DateTimeInput, TextInput,SelectInput} from "react-admin";
 import {Box} from '@mui/material'
+import validateInteger from "./selfMade/validateInteger";
 
 const NotesCreate = (props) =>{
     return (
@@ -8,10 +9,10 @@ const NotesCreate = (props) =>{
             <SimpleForm>
                 <Box display={{ xs: 'block', sm: 'flex' }} sx={{ width: 1 }}>
                     <Box flex={2}  mr={{ xs: 0, sm: '0.5em' }}>
-                        <NumberInput required fullWidth source="csrID"/>
+                        <NumberInput required fullWidth source="csrID" min ={1} validate={validateInteger}/>
                     </Box>
                     <Box flex={2} mr={{ xs: 0, sm: '0.5em' }}>
-                        <NumberInput fullWidth  required source="csrGroup"/>
+                        <NumberInput fullWidth  required source="csrGroup" min ={1} validate={validateInteger}/>
                     </Box>
                 </Box>
                 <TextInput required source="email" type="email" fullWidth/>

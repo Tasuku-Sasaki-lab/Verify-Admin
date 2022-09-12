@@ -1,6 +1,7 @@
 import React from "react";
 import { Edit,SimpleForm,DateTimeInput,TextInput,NumberInput ,SelectInput} from "react-admin";
-import {Box} from '@mui/material'
+import {Box} from '@mui/material';
+import validateInteger from "./selfMade/validateInteger";
 
 const NotesEdit =(props) =>{
     return (
@@ -12,7 +13,7 @@ const NotesEdit =(props) =>{
                         <NumberInput disabled source="csrID" fullWidth/>
                     </Box>
                     <Box flex={2} mr={{ xs: 0, sm: '0.5em' }}>
-                        <NumberInput required source="csrGroup" fullWidth/>
+                        <NumberInput required source="csrGroup" fullWidth min ={1} validate={validateInteger}/>
                     </Box>
                 </Box>
                 <TextInput required source="email" type="email" fullWidth/>

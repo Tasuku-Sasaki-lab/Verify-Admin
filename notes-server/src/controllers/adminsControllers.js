@@ -9,13 +9,15 @@ module.exports = {
         const Adminemail = request.body.username;
         const admins = await Admin.findOne({"email":Adminemail});
         if(admins == null){
-          reply.code(400).send("User don't exit")
+          reply.code(400).send({message:"User don't exit"});   
+          return;       
         }
 
         if(request.body.password == admins.pass){
-          reply.code(200);
+          reply.code(200).send();
+          return;
         }else{
-          reply.code(401);
+          reply.code(401).send();
         }
       } catch (e) {
         reply.code(500).send(e);
