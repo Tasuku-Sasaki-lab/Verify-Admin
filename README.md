@@ -11,9 +11,8 @@ CSR_mongo(https://github.com/tasuku-revol/CSR_mongo) に関連し、ユーザー
 
   
 
-## Requirement
+## Environment
 
-* requirements.txtを参照
 
 * GCP e2-standard-2（開発者のマシン）
 
@@ -39,6 +38,7 @@ cd Verify-admin
 ```bash
 
 cd notes-server
+npm init -y
 npm install fastify mongoose --save
 npm start
 
@@ -78,16 +78,19 @@ db.admins.insert({"email":"test@com","pass":"hogehoge"})
 
   
 
-（http://localhost:3000/)にアクセス
+（http://localhost:3000/) にアクセス
 
 ## Features
 
-* DB構造
-db : notes_db
-collection1 : admins
-collection2 : notes
-adimins : 
-	```
+### DB構造
+ * db : notes_db
+ * collection1 : admins
+ * collection2 : notes
+ 
+ #### adimins : 
+ 
+```bash
+	
 	noteSchema = new  Schema({
 
 	email:{type:String,reqiured:true},
@@ -95,9 +98,13 @@ adimins :
 	pass:{type:String,reqiured:true}
 
 	});
-	```
-	notes : 
-	```
+	
+```
+	
+ #### notes :
+ 
+```bash
+	
 	noteSchema = new  Schema({
 
 	csrID:{type:Number,reqiured:true},
@@ -117,12 +124,12 @@ adimins :
 	pem:{type:String}
 
 	});
-	```
-	  
-  
+	
+```
+	   
 
-* CNに関して
-	CSRのCNはRFC4514 Distinguished Name string(https://www.ietf.org/rfc/rfc4514.txt)に準拠します。
+### CNに関して
+CSRのCNはRFC4514 Distinguished Name string (https://www.ietf.org/rfc/rfc4514.txt) に準拠します。
 
   
 
