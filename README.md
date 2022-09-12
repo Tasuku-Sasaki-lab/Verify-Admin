@@ -11,9 +11,8 @@ CSR_mongo(https://github.com/tasuku-revol/CSR_mongo) に関連し、ユーザー
 
   
 
-## Requirement
+## Environment
 
-* requirements.txtを参照
 
 * GCP e2-standard-2（開発者のマシン）
 
