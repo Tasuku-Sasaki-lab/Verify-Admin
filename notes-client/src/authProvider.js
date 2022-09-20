@@ -10,32 +10,26 @@ const authProvider = {
         //判定はサーバー側でやって、こっちはステータスのみ受け取る
         return fetch(request)
             .then(response => {
+                console.log(response);
                 //ßconsole.log(response);
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error(response.statusText);
                 }
-                //このりたーんがauthに入る
-                return username;
+                //このreturn がauthに入る
+                return response.json();
             })
             
             .then(auth => {
-                //authには全部入れたい　identifyを参照 
-                console.log(auth);
-                localStorage.setItem('auth', JSON.stringify(auth));
+                //authにはtoken
+                const a = JSON.stringify(auth)
+                console.log(a);
+                localStorage.setItem('auth', a);
             })
             .catch((e) => {
                throw new Error(e);
             });
     },
-    /*
-    login: ({ username, password }) => {
-        if (username !== 'john' || password !== '123') {
-            return Promise.reject();
-        }
-        localStorage.setItem('username', username);
-        return Promise.resolve();
-    },
-    */
+
     // called when the user clicks on the logout button
     logout: () => {
         localStorage.removeItem('auth');
@@ -61,7 +55,8 @@ const authProvider = {
         try {
             //const { id, fullName, avatar } = JSON.parse(localStorage.getItem('auth'));
             //JWTのデコードJSONから名前subをとる
-            const fullName =localStorage.getItem('auth');
+            //const fullName = JSON.parse(localStorage.getItem('auth')).username;
+            const fullName = "tasuku";
             return Promise.resolve({ fullName});
         } catch (error) {
             return Promise.reject(error);

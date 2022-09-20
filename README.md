@@ -40,6 +40,8 @@ cd Verify-admin
 cd notes-server
 npm init -y
 npm install fastify mongoose --save
+npm install --save dotenv
+npm install jsonwebtoken --save
 npm start
 
 ```
@@ -143,7 +145,6 @@ CSRのCNはRFC4514 Distinguished Name string (https://www.ietf.org/rfc/rfc4514.t
 
   
 
-* JWT検証を後々開発します。
 
   
 

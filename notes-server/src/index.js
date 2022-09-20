@@ -3,6 +3,7 @@ const app = fastify();
 const mongoose = require('mongoose');
 const noteRoutes = require('./routes/noteRoutes');
 const contentRangeHook = require('./hooks/contentRangeHook');
+const jwtVerifyHook = require('./hooks/jwtVerifyHook');
 const adminRoutes = require('./routes/adminRoutes');
 
 try {
@@ -14,9 +15,11 @@ try {
   console.error(e);
 }
 
-adminRoutes(app);
 
+app.addHook('preHandler', jwtVerifyHook);
 app.addHook('preHandler', contentRangeHook);
+
+adminRoutes(app);
 noteRoutes(app);
 
 app.listen(5000, (err, address) => {

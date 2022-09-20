@@ -1,6 +1,5 @@
-//import { stringify } from 'query-string';
-
 const Admin = require('../models/Admins');
+const jwtSign = require('../JWT/jwtSign');
 
 module.exports = {
     //login
@@ -14,7 +13,9 @@ module.exports = {
         }
 
         if(request.body.password == admins.pass){
-          reply.code(200).send();
+          //JWTの生成
+          const token = await jwtSign(Adminemail);
+          reply.code(200).send({'username':Adminemail,'Token' :token});
           return;
         }else{
           reply.code(401).send();

@@ -1,4 +1,5 @@
 const Note = require('../models/Notes');
+const jwtVerify = require('../JWT/jwtVerify');
 
 module.exports = {
   //# create a note
@@ -16,6 +17,7 @@ module.exports = {
   //#get the list of notes
   fetch: async (request, reply) => {
     try {
+      
       const notes = await Note.find({});
       reply.code(200).send(notes);
     } catch (e) {

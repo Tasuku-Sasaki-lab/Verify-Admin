@@ -19,8 +19,11 @@
   },
   "homepage": "https://github.com/LanciWeb/fastify-notes-backend#readme",
   "dependencies": {
-    "fastify": "^3.6.0",
-    "mongoose": "^5.10.9",
+    "@types/jsonwebtoken": "^8.5.9",
+    "dotenv": "^16.0.2",
+    "fastify": "^3.29.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.15",
     "nodemon": "^2.0.4"
   }
 }

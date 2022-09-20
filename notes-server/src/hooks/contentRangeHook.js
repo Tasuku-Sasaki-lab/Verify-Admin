@@ -1,7 +1,7 @@
 const Note = require('../models/Notes');
 
 module.exports = (request, reply, done) => {
-  Note.count({}, (err, count) => {
+  Note.countDocuments({}, (err, count) => {
     if (err) {
       console.error(err);
       reply.code(500).send('Error!');
