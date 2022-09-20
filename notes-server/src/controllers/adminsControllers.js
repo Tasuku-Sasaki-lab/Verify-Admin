@@ -8,7 +8,7 @@ module.exports = {
         const Adminemail = request.body.username;
         const admins = await Admin.findOne({"email":Adminemail});
         if(admins == null){
-          reply.code(400).send({message:"User don't exit"});   
+          reply.code(400).send({message:"User doesn't exit"});   
           return;       
         }
 
