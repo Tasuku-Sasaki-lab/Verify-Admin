@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const jwtSecret = process.env.JWT_KEY;
 
-module.exports = (request, reply)=>{
+module.exports = async (request, reply)=>{
     try {
         if (request.url ==  '/authenticate'){
             return;
