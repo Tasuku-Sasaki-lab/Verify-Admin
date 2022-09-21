@@ -10,8 +10,6 @@ const authProvider = {
         //判定はサーバー側でやって、こっちはステータスのみ受け取る
         return fetch(request)
             .then(response => {
-                console.log(response);
-                //ßconsole.log(response);
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error(response.statusText);
                 }
@@ -21,9 +19,7 @@ const authProvider = {
             
             .then(auth => {
                 //authにはtoken
-                const a = JSON.stringify(auth)
-                console.log(a);
-                localStorage.setItem('auth', a);
+                localStorage.setItem('auth', JSON.stringify(auth));
             })
             .catch((e) => {
                throw new Error(e);
