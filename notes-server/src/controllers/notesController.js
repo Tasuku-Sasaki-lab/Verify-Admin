@@ -1,5 +1,4 @@
 const Note = require('../models/Notes');
-const jwtVerify = require('../JWT/jwtVerify');
 
 module.exports = {
   //# create a note

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const jwtSecret = process.env.JWT_KEY;
 
-module.exports = async (username) => {
+module.exports = (username) => {
     //生成
     var date = new Date() ;
     var miriSecondNow = date.getTime() ;
@@ -10,8 +10,8 @@ module.exports = async (username) => {
     var exp = nbf + 8*60*60; //exp = 8h
 
     const jwtPayload = {
-        "iss": username,
-        "sub": "mitsuru@procube.jp",
+        "iss": "mitsuru@procube.jp",
+        "sub": username,
         "exp": exp,
         "nbf": nbf,
     };
@@ -19,10 +19,5 @@ module.exports = async (username) => {
         algorithm: 'HS256',
     };
 
-    try{ 
-        const token = jwt.sign(jwtPayload, jwtSecret, jwtOptions);
-        return token;
-    }catch(err){
-        return err.message();
-    }
+    return jwt.sign(jwtPayload, jwtSecret, jwtOptions);
 };

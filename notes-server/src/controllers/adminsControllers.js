@@ -14,7 +14,7 @@ module.exports = {
 
         if(request.body.password == admins.pass){
           //JWTの生成
-          const token = await jwtSign(Adminemail);
+          const token =  jwtSign(Adminemail);
           reply.code(200).send({'username':Adminemail,'Token' :token});
           return;
         }else{
