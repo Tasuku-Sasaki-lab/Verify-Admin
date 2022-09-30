@@ -7,7 +7,7 @@ module.exports = async (request, reply)=>{
         if (request.url ==  '/authenticate'){
             return;
         }
-        const res = /(?<=Bearer(\s)*)[a-zA-Z\d\-._~+/]+=*/;
+        const res = /(?<=^Bearer(\s)+)[a-zA-Z\d\-._~+/]+=*$/;
         const token = request.headers.authorization.match(res);
         const decoded = jwt.verify(token[0], jwtSecret);
         console.log( `OK: decoded.username=[${decoded.iss}]` )
