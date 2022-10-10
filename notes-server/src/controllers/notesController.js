@@ -5,6 +5,16 @@ module.exports = {
   create: async (request, reply) => {
     try {
       const note = request.body;
+      const noteCN = note.CN;
+      const noteCSRID = note.csrID
+      if (await Note.findOne({"CN" :noteCN})){
+        reply.code(409).send("This CN is already used");
+        return ;
+      }
+      if (await Note.findOne({"csrID" :noteCSRID})){
+        reply.code(409).send("This csrID is already used")
+        return ;
+      }
       const newNote = await Note.create(note);
       reply.code(201).send(newNote);
     } catch (e) {
@@ -42,6 +52,16 @@ update: async (request, reply) => {
     try {
       const noteId = request.params.id;
       const updates = request.body;
+      const noteCN = updates.CN;
+      const noteCSRID = updates.csrID
+      if (await Note.findOne({"CN" :noteCN})){
+        reply.code(409).send("This CN is already used");
+        return ;
+      }
+      if (await Note.findOne({"csrID" :noteCSRID})){
+        reply.code(409).send("This csrID is already used")
+        return ;
+      }
       await Note.findByIdAndUpdate(noteId, updates);
       const noteToUpdate = await Note.findById(noteId);
       reply.code(200).send({ data: noteToUpdate });

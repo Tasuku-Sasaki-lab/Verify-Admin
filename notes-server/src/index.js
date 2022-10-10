@@ -5,6 +5,7 @@ const noteRoutes = require('./routes/noteRoutes');
 const contentRangeHook = require('./hooks/contentRangeHook');
 const jwtVerifyHook = require('./hooks/jwtVerifyHook');
 const adminRoutes = require('./routes/adminRoutes');
+const scepRoutes = require('./routes/scepRoutes');
 
 try {
   mongoose.connect('mongodb://localhost:27017/notes_db', {
@@ -21,6 +22,7 @@ app.addHook('preHandler', contentRangeHook);
 
 adminRoutes(app);
 noteRoutes(app);
+scepRoutes(app);
 
 app.listen(5000, (err, address) => {
   if (err) {
