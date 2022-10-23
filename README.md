@@ -15,8 +15,12 @@ CSR_mongo(https://github.com/tasuku-revol/CSR_mongo) に関連し、ユーザー
 
 
 * GCP e2-standard-2（開発者のマシン）
+* MongoDB shell version v4.0.28
 
 ## Usage
+
+* Mongoの起動　
+　(https://www.mongodb.com/)
 
 * レポジトリをクローン
 
