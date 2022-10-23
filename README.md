@@ -141,19 +141,80 @@ CSRのCNはRFC4514 Distinguished Name string (https://www.ietf.org/rfc/rfc4514.t
 
 ## Note
 
-* 開発段階で管理者の認証情報を手動で登録しています。
-
-  
-
-* DBの構成を後々修正いたします。
-
-  
-
+* 開発段階で管理者の認証情報をDBに手動で登録しています。
 
   
 
 * APIでのDBの更新を後々開発します。
 
+
+## TEST 
+
+
+* レポジトリをクローン
+
+  
+
+```bash
+
+git@github.com:tasuku-revol/Verify-Admin.git
+cd Verify-admin
+
+```
+
+* Mongoの起動　(https://www.mongodb.com/)
+*  環境変数の設定
+
+
+```bash
+
+cd notes-server
+vim .env
+
+```
+
+テスト用のDB_URLは固定です。下記から変更しないでください。DB_URL以外はお好みに変更していただいても問題ありません。
+
+```bash
+
+JWT_KEY="hoge"
+export JWT_KEY
+JWT_KEY_SCEP="hoge"
+export JWT_KEY_SCEP
+DB_URL="mongodb://localhost:27017/notes_db"
+export DB_URL
+SIGNER="hoge@hoge.com"
+export SIGNER
+```
+
+```bash
+
+source .env
+
+```
+
+*  サーバー側の起動
+
+```bash
+
+npm start
+
+```
+
+*  テスト環境の構築
+```bash
+
+cd ../test
+pip install -r requirements.txt
+source ../notes-server/.env
+
+```
+*  実行
+```bash
+
+python3 testNotes-server.py
+
+```
   
 
 ## Author
