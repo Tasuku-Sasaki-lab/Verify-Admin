@@ -8,7 +8,8 @@ const adminRoutes = require('./routes/adminRoutes');
 const scepRoutes = require('./routes/scepRoutes');
 
 try {
-  mongoose.connect('mongodb://localhost:27017/notes_db', {
+  const url = process.env.DB_URL
+  mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

@@ -15,4 +15,7 @@ module.exports = (app) => {
   
   //#delete a note
   app.delete('/api/notes/:id', notesController.delete);
+
+  //#delete a note
+  app.delete('/api/notes', notesController.deleteMany);
 };

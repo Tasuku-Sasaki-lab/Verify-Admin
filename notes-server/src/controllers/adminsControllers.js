@@ -8,7 +8,7 @@ module.exports = {
         const Adminemail = request.body.username;
         const admins = await Admin.findOne({"email":Adminemail});
         if(admins == null){
-          reply.code(400).send({message:"User doesn't exit"});   
+          reply.code(400).send(Error("User doesn't exit"));   
           return;       
         }
 
@@ -18,7 +18,7 @@ module.exports = {
           reply.code(200).send({'username':Adminemail,'Token' :token});
           return;
         }else{
-          reply.code(401).send();
+          reply.code(401).send(Error("The password is wrong"));
         }
       } catch (e) {
         reply.code(500).send(e);

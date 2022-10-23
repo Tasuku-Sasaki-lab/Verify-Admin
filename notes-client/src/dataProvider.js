@@ -103,13 +103,11 @@ export default {
       id: json._id,
     })),
 
-  deleteMany: (resource, params) => {
-    const query = {
-      filter: JSON.stringify({ id: params.ids }),
-    };
-    return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
-      method: 'DELETE',
-      body: JSON.stringify(params.data),
-    }).then(({ json }) => ({ data: json }));
-  },
+    deleteMany: (resource, params) => {
+      return httpClient(`${apiUrl}/${resource}`, {
+        method: 'DELETE',
+        body: JSON.stringify(params.ids),
+      }).then(({ json }) => ({ data: json }));
+    },
+    //URLやと文字列制限あり
 };

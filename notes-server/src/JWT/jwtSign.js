@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const jwtSecret = process.env.JWT_KEY;
+const signer = process.env.SIGNER;
 
 module.exports = (username) => {
     //生成
@@ -10,7 +11,7 @@ module.exports = (username) => {
     var exp = nbf + 8*60*60; //exp = 8h
 
     const jwtPayload = {
-        "iss": "mitsuru@procube.jp",
+        "iss": signer,
         "sub": username,
         "exp": exp,
         "nbf": nbf,

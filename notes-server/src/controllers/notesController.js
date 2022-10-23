@@ -8,11 +8,11 @@ module.exports = {
       const noteCN = note.CN;
       const noteCSRID = note.csrID
       if (await Note.findOne({"CN" :noteCN})){
-        reply.code(409).send("This CN is already used");
+        reply.code(409).send(Error("This CN is already used"));
         return ;
       }
       if (await Note.findOne({"csrID" :noteCSRID})){
-        reply.code(409).send("This csrID is already used")
+        reply.code(409).send(Error("This csrID is already used"));
         return ;
       }
       const newNote = await Note.create(note);
@@ -54,12 +54,14 @@ update: async (request, reply) => {
       const updates = request.body;
       const noteCN = updates.CN;
       const noteCSRID = updates.csrID
-      if (await Note.findOne({"CN" :noteCN})){
-        reply.code(409).send("This CN is already used");
+      const noteByCN = await Note.findOne({"CN" :noteCN});
+      if (noteId != noteByCN.id){
+        reply.code(409).send(Error("This CN is already used"));
         return ;
       }
-      if (await Note.findOne({"csrID" :noteCSRID})){
-        reply.code(409).send("This csrID is already used")
+      const noteByCSRID =await Note.findOne({"csrID" :noteCSRID});
+      if (noteId != noteByCSRID.id){
+        reply.code(409).send(Error("This csrID is already used"))
         return ;
       }
       await Note.findByIdAndUpdate(noteId, updates);
@@ -81,5 +83,22 @@ delete: async (request, reply) => {
     } catch (e) {
       reply.code(500).send(e);
     }
+  },
+
+  //#delete notes
+  deleteMany: async (request, reply) => {
+  try {
+    const noteIds = request.body;
+    let noteToDeletes=[];
+    for (const noteId of noteIds){
+      const noteToDelete = await Note.findById(noteId);
+      await Note.findByIdAndDelete(noteId);
+      noteToDeletes.push(noteToDelete);
+    }
+    reply.code(200).send(noteToDeletes);
+    
+  } catch (e) {
+    reply.code(500).send(e);
   }
+}
 };

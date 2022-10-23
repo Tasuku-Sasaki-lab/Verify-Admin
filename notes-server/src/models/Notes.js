@@ -11,7 +11,7 @@ const  noteSchema = new Schema({
     expiration_date:{ type: Date, required:true},
     pem:{type:String}
 });
+const Note = mongoose.model('notes',noteSchema);//collection
 
-const Note = mongoose.model('note',noteSchema);//collection
 
 module.exports = Note;
