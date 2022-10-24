@@ -33,19 +33,38 @@ cd Verify-admin
 
 ```
 
+* 環境変数の設定
+
+```bash
+
+cd notes-server
+vim .env
+
+```
+
+
+
+```bash
+
+JWT_KEY="hoge"
+JWT_KEY_SCEP="hoge"
+DB_URL="mongodb://{url}/{db_name}"
+SIGNER="hoge@hoge.com"
+
+```
   
+DB_URLの形式に注意してください。<br>
+例えば、localhost、port番号が27017、DBの名前がnotes_dbの場合、mongodb://localhost:27017/notes_db　となります。
 
 * サーバーの立ち上げ
+
+
 
   
 
 ```bash
 
 cd notes-server
-npm init -y
-npm install fastify mongoose --save
-npm install --save dotenv
-npm install jsonwebtoken --save
 npm start
 
 ```
@@ -61,7 +80,6 @@ npm start
 cd ~
 
 cd notes-client
-npm install react-admin @material-ui/core --save
 npm start
 
 ```
