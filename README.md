@@ -65,6 +65,7 @@ DB_URLの形式に注意してください。<br>
 ```bash
 
 cd notes-server
+npm install
 npm start
 
 ```
@@ -80,6 +81,7 @@ npm start
 cd ~
 
 cd notes-client
+npm install
 npm start
 
 ```
