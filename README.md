@@ -15,8 +15,12 @@ CSR_mongo(https://github.com/tasuku-revol/CSR_mongo) に関連し、ユーザー
 
 
 * GCP e2-standard-2（開発者のマシン）
+* MongoDB shell version v4.0.28
 
 ## Usage
+
+* Mongoの起動　
+　(https://www.mongodb.com/)
 
 * レポジトリをクローン
 
@@ -29,19 +33,40 @@ cd Verify-admin
 
 ```
 
+* 環境変数の設定
+
+```bash
+
+cd notes-server
+vim .env
+
+```
+
+
+
+```bash
+
+JWT_KEY="hoge"
+JWT_KEY_SCEP="hoge"
+DB_URL="mongodb://{url}/{db_name}"
+SIGNER="hoge@hoge.com"
+
+```
   
+DB_URLの形式に注意してください。<br>
+例えば、localhost、port番号が27017、DBの名前がnotes_dbの場合、mongodb://localhost:27017/notes_db　となります。<br>
+また、以下はDBの名前をnotes_dbとして、説明を続けます。
 
 * サーバーの立ち上げ
+
+
 
   
 
 ```bash
 
 cd notes-server
-npm init -y
-npm install fastify mongoose --save
-npm install --save dotenv
-npm install jsonwebtoken --save
+npm install
 npm start
 
 ```
@@ -57,7 +82,7 @@ npm start
 cd ~
 
 cd notes-client
-npm install react-admin @material-ui/core --save
+npm install
 npm start
 
 ```
@@ -137,19 +162,80 @@ CSRのCNはRFC4514 Distinguished Name string (https://www.ietf.org/rfc/rfc4514.t
 
 ## Note
 
-* 開発段階で管理者の認証情報を手動で登録しています。
-
-  
-
-* DBの構成を後々修正いたします。
-
-  
-
+* 開発段階で管理者の認証情報をDBに手動で登録しています。
 
   
 
 * APIでのDBの更新を後々開発します。
 
+
+## TEST 
+
+
+* レポジトリをクローン
+
+  
+
+```bash
+
+git@github.com:tasuku-revol/Verify-Admin.git
+cd Verify-admin
+
+```
+
+* Mongoの起動　(https://www.mongodb.com/)
+*  環境変数の設定
+
+
+```bash
+
+cd notes-server
+vim .env
+
+```
+
+テスト用のDB_URLは固定です。下記から変更しないでください。DB_URL以外はお好みに変更していただいても問題ありません。
+
+```bash
+
+JWT_KEY="hoge"
+export JWT_KEY
+JWT_KEY_SCEP="hoge"
+export JWT_KEY_SCEP
+DB_URL="mongodb://localhost:27017/notes_db"
+export DB_URL
+SIGNER="hoge@hoge.com"
+export SIGNER
+```
+
+```bash
+
+source .env
+
+```
+
+*  サーバー側の起動
+
+```bash
+
+npm start
+
+```
+
+*  テスト環境の構築
+```bash
+
+cd ../test
+pip install -r requirements.txt
+source ../notes-server/.env
+
+```
+*  実行
+```bash
+
+python3 testNotes-server.py
+
+```
   
 
 ## Author
@@ -159,4 +245,3 @@ CSRのCNはRFC4514 Distinguished Name string (https://www.ietf.org/rfc/rfc4514.t
 *  株式会社　プロキューブ
 
 * t.sasaki.revol@gmail.com
-

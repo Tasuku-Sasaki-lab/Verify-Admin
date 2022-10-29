@@ -1,0 +1,29 @@
+{
+  "name": "fastify-devices-backend",
+  "version": "1.0.0",
+  "description": "Backend source code for YouTube Fastify + React admin playlist",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LanciWeb/fastify-devices-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LanciWeb/fastify-devices-backend/issues"
+  },
+  "homepage": "https://github.com/LanciWeb/fastify-devices-backend#readme",
+  "dependencies": {
+    "@types/jsonwebtoken": "^8.5.9",
+    "dotenv": "^16.0.2",
+    "fastify": "^3.29.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.15",
+    "nodemon": "^2.0.4"
+  }
+}
