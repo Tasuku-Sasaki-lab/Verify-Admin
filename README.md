@@ -54,8 +54,12 @@ SIGNER="hoge@hoge.com"
 ```
   
 DB_URLの形式に注意してください。<br>
+<<<<<<< HEAD
 例えば、localhost、port番号が27017、DBの名前がnotes_dbの場合、mongodb://localhost:27017/notes_db　となります。<br>
 また、以下はDBの名前をnotes_dbとして、説明を続けます。
+=======
+例えば、localhost、port番号が27017、DBの名前がnotes_dbの場合、mongodb://localhost:27017/notes_db　となります。
+>>>>>>> 68d1d481af36e76447d8bf9d6eb1fdbfb181c710
 
 * サーバーの立ち上げ
 
@@ -177,6 +181,7 @@ CSRのCNはRFC4514 Distinguished Name string (https://www.ietf.org/rfc/rfc4514.t
   
 
 ```bash
+<<<<<<< HEAD
 
 git@github.com:tasuku-revol/Verify-Admin.git
 cd Verify-admin
@@ -216,6 +221,47 @@ source .env
 
 *  サーバー側の起動
 
+=======
+
+git@github.com:tasuku-revol/Verify-Admin.git
+cd Verify-admin
+
+```
+
+* Mongoの起動　(https://www.mongodb.com/)
+*  環境変数の設定
+
+
+```bash
+
+cd notes-server
+vim .env
+
+```
+
+テスト用のDB_URLは固定です。下記から変更しないでください。DB_URL以外はお好みに変更していただいても問題ありません。
+
+```bash
+
+JWT_KEY="hoge"
+export JWT_KEY
+JWT_KEY_SCEP="hoge"
+export JWT_KEY_SCEP
+DB_URL="mongodb://localhost:27017/notes_db"
+export DB_URL
+SIGNER="hoge@hoge.com"
+export SIGNER
+```
+
+```bash
+
+source .env
+
+```
+
+*  サーバー側の起動
+
+>>>>>>> 68d1d481af36e76447d8bf9d6eb1fdbfb181c710
 ```bash
 
 npm start
