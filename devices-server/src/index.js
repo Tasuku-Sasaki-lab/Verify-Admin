@@ -1,7 +1,8 @@
 const fastify = require('fastify');
 const app = fastify();
 const mongoose = require('mongoose');
-const deviceRoutes = require('./routes/deviceRoutes');
+const deviceAdminRoutes = require('./routes/deviceAdminRoutes');
+const deviceUserRoutes = require('./routes/deviceUserRoutes');
 const contentRangeHook = require('./hooks/contentRangeHook');
 const jwtVerifyHook = require('./hooks/jwtVerifyHook');
 const adminRoutes = require('./routes/adminRoutes');
@@ -22,7 +23,8 @@ app.addHook('preHandler', jwtVerifyHook);
 app.addHook('preHandler', contentRangeHook);
 
 adminRoutes(app);
-deviceRoutes(app);
+deviceAdminRoutes(app);
+deviceUserRoutes(app);
 scepRoutes(app);
 
 app.listen(5000, (err, address) => {

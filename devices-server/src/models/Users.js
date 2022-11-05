@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const  deviceSchema = new Schema({
     email:{type:String,reqiured:true,unique: true},
     pass:{type:String,reqiured:true},
-    role :{type:String,required:true}
+    role :{type:Number,required:true} //0:admin 1:user
 });
 const User = mongoose.model('users',deviceSchema);//collection
 

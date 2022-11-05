@@ -10,7 +10,8 @@ const  devicesSchema = new Schema({
     secret:{type:String,reqiured:true},
     status:{type:String,reqiured:true},
     expiration_date:{ type: Date, required:true},
-    pem:{type:String}
+    pem:{type:String},
+    command:{type:String}
 });
 const Device = mongoose.model('devices',devicesSchema);//collection
 

@@ -1,85 +1,26 @@
-const Admin = require('../models/Admins');
+const User = require('../models/Users');
 const jwtSign = require('../JWT/jwtSign');
 
 module.exports = {
     //login
     auth: async(request,reply)=>{
-      try {
-        const Adminemail = request.body.username;
-        const admins = await Admin.findOne({"email":Adminemail});
-        if(admins == null){
+      try{
+        const email = request.body.username;
+        const users = await User.findOne({"email":email});
+        if(users == null){
           reply.code(400).send(Error("User doesn't exit"));   
           return;       
         }
-
-        if(request.body.password == admins.pass){
+        const role = users.role;
+        if(request.body.password == users.pass){
           //JWTの生成
-          const token =  jwtSign(Adminemail);
-          reply.code(200).send({'username':Adminemail,'Token' :token});
+          const token =  jwtSign(email,role);
+          reply.code(200).send({'username':email,'role':role, 'Token' :token});
           return;
         }else{
           reply.code(401).send(Error("The password is wrong"));
         }
-      } catch (e) {
-        reply.code(500).send(e);
-      }
-    },
-    //# create a admin
-    create: async (request, reply) => {
-      try {
-        const admin = request.body;
-        const newAdmin = await Admin.create(admin);
-        reply.code(201).send(newAdmin);
-      } catch (e) {
-        reply.code(500).send(e);
-      }
-    },
-    
-    //#get the list of Admins
-    //#get the list of Admins
-    fetch: async (request, reply) => {
-      try {
-        const Admins = await Admin.find({});
-        reply.code(200).send(Admins);
-      } catch (e) {
-        reply.code(500).send(e);
-      }
-    },
-    
-    //#get a single Admin by email
-  get: async (request, reply) => {
-    try {
-      const deviceId = request.params.id;
-      const device = await Admin.findById(deviceId);
-      reply.code(200).send(device);
-    } catch (e) {
-      reply.code(500).send(e);
-    }
-    },
-    
-    //#update a Admin
-  //#update a Admin
-  update: async (request, reply) => {
-      try {
-        const AdminId = request.params.id;
-        const updates = request.body;
-        await Admin.findByIdAndUpdate(AdminId, updates);
-        const AdminToUpdate = await Admin.findById(AdminId);
-        reply.code(200).send({ data: AdminToUpdate });
-      } catch (e) {
-        reply.code(500).send(e);
-      }
-    },
-  
-    //#delete a Admin
-  //#delete a Admin
-  delete: async (request, reply) => {
-      try {
-        const AdminId = request.params.id;
-        const AdminToDelete = await Admin.findById(AdminId);
-        await Admin.findByIdAndDelete(AdminId);
-        reply.code(200).send({ data: AdminToDelete });
-      } catch (e) {
+      }catch (e) {
         reply.code(500).send(e);
       }
     }

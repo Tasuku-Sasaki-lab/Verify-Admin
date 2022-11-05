@@ -12,7 +12,7 @@ const devicesEdit =(props) =>{
                 <TextInput source="id" disabled></TextInput>
                 <Box display={{ xs: 'block', sm: 'flex' }} sx={{ width: 1 }}>
                     <Box flex={2}  mr={{ xs: 0, sm: '0.5em' }}>
-                        <NumberInput disabled source="csrID" fullWidth/>
+                        <NumberInput  source="csrID" fullWidth min ={1} validate={validateInteger}/>
                     </Box>
                     <Box flex={2} mr={{ xs: 0, sm: '0.5em' }}>
                         <NumberInput required source="csrGroup" fullWidth min ={1} validate={validateInteger}/>
@@ -42,7 +42,7 @@ const devicesEdit =(props) =>{
                        <DateTimeInput required source="expiration_date" fullWidth></DateTimeInput>
                     </Box>
                 </Box>
-                <TextInput required source="CN" label="Format as RFC4514 Distinguished Name string" defaultValue="CN=TEST1,OU=MDM,O=scep-client,C=US" fullWidth/>
+                <TextInput required source="CN"  fullWidth/>
                 <TextInput required source="secret" fullWidth/>
                 <TextInput disabled source="pem" fullWidth multiline/>
             </SimpleForm>

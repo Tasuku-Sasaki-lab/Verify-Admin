@@ -51,8 +51,7 @@ const authProvider = {
         try {
             //const { id, fullName, avatar } = JSON.parse(localStorage.getItem('auth'));
             //JWTのデコードJSONから名前subをとる
-            //const fullName = JSON.parse(localStorage.getItem('auth')).username;
-            const fullName = "tasuku";
+            const fullName = JSON.parse(localStorage.getItem('auth')).username;
             return Promise.resolve({ fullName});
         } catch (error) {
             return Promise.reject(error);

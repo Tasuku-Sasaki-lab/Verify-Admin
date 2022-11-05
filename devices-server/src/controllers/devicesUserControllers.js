@@ -1,12 +1,32 @@
 const Device = require('../models/Devices');
+
 const command = process.env.COMMAND;
+const secret_length = process.env.SECRET_LENGTH;
+const expiration_term = process.env.EXPIRATION_TERM;
+
+function genCsrID(){
+  return 1;
+}
+function genCsrGroup(){
+  return 1;
+}
+function genPassword()
+{
+	return "pass";
+}
+function genExpiration()
+{    
+  const date = new Date() ;
+  date.setDate(date.getDate() +  parseFloat(expiration_term )); 
+	return date;
+}
+
 module.exports = {
   //# create a device
   create: async (request, reply) => {
     try {
       const device = request.body;
       const deviceCN = device.CN;
-      const deviceCSRID = device.csrID;
       //validationが実装されたらやめると思う
       if(device.email.length==0){
         reply.code(406).send(Error("Email should not be empty"));
@@ -16,11 +36,14 @@ module.exports = {
         reply.code(409).send(Error("This CN is already used"));
         return ;
       }
-      if (await Device.findOne({"csrID" :deviceCSRID})){
-        reply.code(409).send(Error("This csrID is already used"));
-        return ;
-      }
+
+      device["csrID"]=genCsrID();
+      device["csrGroup"]=genCsrGroup();
+      device["secret"] = genPassword();
+      device["expiration_date"]=  genExpiration();
+      device["status"]="Waiting";
       device["command"] =command +" -cn "+ deviceCN +" -secret " +   device["secret"];
+
       const newDevice = await Device.create(device);
       reply.code(201).send(newDevice);
     } catch (e) {
@@ -32,14 +55,24 @@ module.exports = {
   //#get the list of devices
   fetch: async (request, reply) => {
     try {
-      
+      const useremail = request.headers.from;
+      let deviceToFetch=[];
       const devices = await Device.find({});
-      reply.code(200).send(devices);
+      for (const device of devices) {
+       email = device["email"];
+       for (const email_children of email){
+        if(email_children["email-children"] == useremail){
+          deviceToFetch.push(device);
+        }
+       }
+      }
+      reply.code(200).send(deviceToFetch);
     } catch (e) {
       reply.code(500).send(e);
     }
   },
-  
+  //ここから下はいらない
+  // parame　の意味を調べると　EMAILと IDどっちも取れたりするかもよ
   //#get a single device
 //#get a single device
 get: async (request, reply) => {
@@ -54,6 +87,7 @@ get: async (request, reply) => {
   
   //#update a device
 //#update a device
+//　変更できないものの　セキュリティ対策　
 update: async (request, reply) => {
     try {
       const deviceId = request.params.id;

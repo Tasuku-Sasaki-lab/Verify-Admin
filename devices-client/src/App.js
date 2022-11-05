@@ -6,6 +6,8 @@ import devicesList from './components/DevicesList';
 import devicesEdit from './components/DevicesEdit';
 import devicesCreate from './components/DevicesCreate';
 
+// ここでユーザーの権限によって変えたらいいのかな
+
 function App() {
   return (
     <Admin dataProvider={dataProvider} authProvider={authProvider}>
