@@ -1,23 +1,34 @@
 const Device = require('../models/Devices');
 
 const command = process.env.COMMAND;
-const secret_length = process.env.SECRET_LENGTH;
-const expiration_term = process.env.EXPIRATION_TERM;
+var expiration_term_se = process.env.EXPIRATION_TERM_SE;
+var expiration_term_system = process.env.EXPIRATION_TERM_SYSTEM;
 
 function genCsrID(){
+  //
   return 1;
 }
 function genCsrGroup(){
   return 1;
 }
-function genPassword()
-{
-	return "pass";
-}
-function genExpiration()
+
+function genExpiration(type)
 {    
   const date = new Date() ;
-  date.setDate(date.getDate() +  parseFloat(expiration_term )); 
+  //3年　の期限　利用者３年　システム6年
+  if (type == "SE"){
+    if (expiration_term_se == null) {
+      expiration_term_se = "3"
+    }
+    date.setYear(date.getFullYear() +  Number(expiration_term_se)); 
+  }
+  
+  if(type == "System"){
+    if (expiration_term_system == null) {
+      expiration_term_system = "6"
+    }
+    date.setYear(date.getFullYear() +  Number(expiration_term_system));
+  }
 	return date;
 }
 
@@ -39,8 +50,7 @@ module.exports = {
 
       device["csrID"]=genCsrID();
       device["csrGroup"]=genCsrGroup();
-      device["secret"] = genPassword();
-      device["expiration_date"]=  genExpiration();
+      device["expiration_date"]=  genExpiration(device["type"]);
       device["status"]="Waiting";
       device["command"] =command +" -cn "+ deviceCN +" -secret " +   device["secret"];
 

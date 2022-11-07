@@ -15,7 +15,7 @@ module.exports = {
         if(request.body.password == users.pass){
           //JWTの生成
           const token =  jwtSign(email,role);
-          reply.code(200).send({'username':email,'role':role, 'Token' :token});
+          reply.code(200).send({'username':email,'Token' :token});
           return;
         }else{
           reply.code(401).send(Error("The password is wrong"));

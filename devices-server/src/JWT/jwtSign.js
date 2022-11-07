@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const jwtSecretAdmin = process.env.JWT_KEY_ADMIN;
-const jwtSecretUser = process.env.JWT_KEY_USER;
+const jwtSecret = process.env.JWT_KEY;
 const signer = process.env.SIGNER;
 
 module.exports = (username,role) => {
@@ -16,13 +15,10 @@ module.exports = (username,role) => {
         "sub": username,
         "exp": exp,
         "nbf": nbf,
+        "role":role,
     };
     const jwtOptions = {
         algorithm: 'HS256',
     };
-    if (role == 0){
-        return jwt.sign(jwtPayload, jwtSecretAdmin, jwtOptions);
-    }else{
-        return jwt.sign(jwtPayload, jwtSecretUser, jwtOptions);
-    }
+    return jwt.sign(jwtPayload, jwtSecret, jwtOptions);
 };

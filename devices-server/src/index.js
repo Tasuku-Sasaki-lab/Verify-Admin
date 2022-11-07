@@ -1,7 +1,7 @@
 const fastify = require('fastify');
 const app = fastify();
 const mongoose = require('mongoose');
-const deviceAdminRoutes = require('./routes/deviceAdminRoutes');
+const deviceAdminRoutes = require('./routes/deviceRoutes');
 const deviceUserRoutes = require('./routes/deviceUserRoutes');
 const contentRangeHook = require('./hooks/contentRangeHook');
 const jwtVerifyHook = require('./hooks/jwtVerifyHook');
@@ -18,8 +18,8 @@ try {
   console.error(e);
 }
 
-
-app.addHook('preHandler', jwtVerifyHook);
+app.decorateRequest('decorded', null);
+app.addHook('onRequest', jwtVerifyHook);
 app.addHook('preHandler', contentRangeHook);
 
 adminRoutes(app);

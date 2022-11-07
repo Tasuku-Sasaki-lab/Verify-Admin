@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const  devicesSchema = new Schema({
-    csrID:{type:Number,reqiured:true},
     csrGroup:{type:Number,reqiured:true},
     CN:{type:String,reqiured:true},
     email:{type:Array,reqiured:true},

@@ -10,19 +10,20 @@ import {
     NumberField,
     ArrayField,
     SingleFieldList,
-    CloneButton,
 } from 'react-admin';
 import CustomDateField from "./selfMade/customDatafield";
 
 const devicesList = (props) =>{//props 親からの受け渡し dataProviderの値が入る
     //変数の中を展開して渡している　キーワード　objectを展開して渡す
     //basePath　URLにdeviceがたされる これでapi/devicesとなるよね　dataprovider 参照
-    const role = JSON.parse(localStorage.getItem('auth')).role;
+    const token = JSON.parse(localStorage.getItem('auth')).Token;
+    const base64 = token.split('.')[1]; 
+    const role = JSON.parse(window.atob(base64)).role;
     const AdminList =  (
         <List { ...props}> 
             <Datagrid>
-                <NumberField source="csrID"/>
-                <NumberField source="csrGroup"/>
+                <TextField source ="_id"></TextField>
+                <NumberField source="csrGroup" label="groupID"/>
                 <ArrayField source="email">
                     <SingleFieldList>
                         <EmailField source="email-children" />
@@ -43,8 +44,8 @@ const devicesList = (props) =>{//props 親からの受け渡し dataProviderの�
     const UserList =(
         <List { ...props}> 
         <Datagrid bulkActionButtons={false}>
-            <NumberField source="csrID"/>
-            <NumberField source="csrGroup"/>
+            <TextField source ="_id"></TextField>
+            <NumberField source="csrGroup" label="groupID"/>
             <ArrayField source="email">
                 <SingleFieldList>
                     <EmailField source="email-children" />
@@ -57,11 +58,11 @@ const devicesList = (props) =>{//props 親からの受け渡し dataProviderの�
             <CustomDateField source="expiration_date"></CustomDateField>
             <TextField source="pem"/>
             <TextField source="command" ></TextField>
-            <CloneButton />
+            <EditButton label="Edit" basepath= "devices" />
         </Datagrid>
     </List>
     );
-    return role == 0 ? AdminList : UserList;
+    return role == "administrator" ? AdminList : UserList;
 };
 
 export default devicesList;

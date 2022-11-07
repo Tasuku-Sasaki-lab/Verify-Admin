@@ -1,25 +1,20 @@
 import React  from "react";
-import { Create,SimpleForm,NumberInput,DateTimeInput, TextInput,SelectInput, ArrayInput,SimpleFormIterator} from "react-admin";
+import { Create,SimpleForm,NumberInput,DateTimeInput, TextInput,SelectInput, ArrayInput,SimpleFormIterator,FieldTitle} from "react-admin";
 import {Box} from '@mui/material'
 import validateInteger from "./selfMade/validateInteger";
 import validateEmail from "./selfMade/validateEmail";
 
 const devicesCreate = (props) =>{
-    const role = JSON.parse(localStorage.getItem('auth')).role;
+    const token = JSON.parse(localStorage.getItem('auth')).Token;
+    const base64 = token.split('.')[1]; 
+    const role = JSON.parse(window.atob(base64)).role;
         const AdminCreate =  (
             <Create {...props}>
                 <SimpleForm>
-                    <Box display={{ xs: 'block', sm: 'flex' }} sx={{ width: 1 }}>
-                        <Box flex={2}  mr={{ xs: 0, sm: '0.5em' }}>
-                            <NumberInput required fullWidth source="csrID" min ={1} validate={validateInteger}/>
-                        </Box>
-                        <Box flex={2} mr={{ xs: 0, sm: '0.5em' }}>
-                            <NumberInput fullWidth  required source="csrGroup" min ={1} validate={validateInteger}/>
-                        </Box>
-                    </Box>
-                    <ArrayInput source="email" required validate={validateEmail}>
+                    <NumberInput fullWidth  required source="csrGroup" min ={1} validate={validateInteger}/>
+                    <ArrayInput source="email" required validate={validateEmail} label="Emails">
                         <SimpleFormIterator inline >
-                            <TextInput required source ="email-children" type="email" fullWidth/>
+                            <TextInput required source ="email-children" label="email" type="Email" fullWidth/>
                         </SimpleFormIterator>
                     </ArrayInput>
                     <Box display={{ xs: 'block', sm: 'flex' }} sx={{ width: 1 }}>
@@ -47,13 +42,14 @@ const devicesCreate = (props) =>{
                 </SimpleForm>
             </Create>
         );
-
+        const emailLabelMessage ="Other Emails (" + JSON.parse(localStorage.getItem('auth')).username +" will be automatically registerd)";
+        const emailLabel =(<FieldTitle label={emailLabelMessage} />);
         const Usercreate =(
             <Create {...props}>
             <SimpleForm>
-                <ArrayInput source="email" required validate={validateEmail}>
+                <ArrayInput source="email" required validate={validateEmail} label={emailLabel}>
                     <SimpleFormIterator inline >
-                        <TextInput required source ="email-children" type="email" fullWidth/>
+                        <TextInput required source ="email-children" type="email" label="Email" fullWidth/>
                     </SimpleFormIterator>
                 </ArrayInput>
                 < SelectInput required source="type" fullWidth choices={[
@@ -66,6 +62,6 @@ const devicesCreate = (props) =>{
         </Create>
         );
 
-        return role == 0 ? AdminCreate : Usercreate;                            
+        return role == "administrator" ? AdminCreate : Usercreate;                            
 };
 export default devicesCreate;
