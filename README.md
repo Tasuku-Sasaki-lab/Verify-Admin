@@ -2,7 +2,7 @@
 
   
 
-CSR_mongo(https://github.com/tasuku-revol/CSR_mongo) に関連し、ユーザーとsecret等を管理する画面
+SCEPサーバー(https://github.com/Tasuku-Sasaki-lab/scep) に関連し、ユーザーとsecret等を管理する画面
 
 ## DEMO
 
@@ -28,7 +28,7 @@ CSR_mongo(https://github.com/tasuku-revol/CSR_mongo) に関連し、ユーザー
 
 ```bash
 
-git@github.com:tasuku-revol/Verify-Admin.git
+git clone git@github.com:Tasuku-Sasaki-lab/Verify-Admin.git
 cd Verify-admin
 
 ```
@@ -37,7 +37,7 @@ cd Verify-admin
 
 ```bash
 
-cd notes-server
+cd devices-server
 vim .env
 
 ```
@@ -46,20 +46,47 @@ vim .env
 
 ```bash
 
-JWT_KEY="hoge"
-JWT_KEY_SCEP="hoge"
-DB_URL="mongodb://{url}/{db_name}"
-SIGNER="hoge@hoge.com"
+JWT_KEY="hoge0123456789"
+export JWT_KEY
+DB_URL="mongodb://localhost:27017/devices_db"
+export DB_URL
+SIGNER="test@test@com"
+export SIGNER
+COMMAND="./scepclient-linux-amd64"
+export COMMAND
+SCEP_SERVER="http://127.0.0.1:2016/scep"
+export SCEP_SERVER
+CERTIFICATE="/etc/pki/tls/certs/nssdc.crt"
+export CERTIFICATE
+PRIVAE_KEY="/etc/pki/tls/private/nssdc.key"
+export PRIVAE_KEY
+EXPIRATION_TERM_SE="3" 
+export EXPIRATION_TERM_SE
+EXPIRATION_TERM_SYSTEM="6" 
+export EXPIRATION_TERM_SYSTEM
+TZ="JST-9"
+export TZ
+JWT_EXPIRATION="28800"
+export JWT_EXPIRATION
 
 ```
-  
-DB_URLの形式に注意してください。<br>
-<<<<<<< HEAD
-例えば、localhost、port番号が27017、DBの名前がnotes_dbの場合、mongodb://localhost:27017/notes_db　となります。<br>
-また、以下はDBの名前をnotes_dbとして、説明を続けます。
-=======
-例えば、localhost、port番号が27017、DBの名前がnotes_dbの場合、mongodb://localhost:27017/notes_db　となります。
->>>>>>> 68d1d481af36e76447d8bf9d6eb1fdbfb181c710
+|環境変数名|詳細|デフォルト値|
+|:--:|--|:--:|
+|DB_URL|形式は、例えばlocalhost、port番号が27017、DBの名前がdevices_dbの場合、mongodb://localhost:27017/devices_db　となります。|なし|
+|JWT_KEY|JWTの秘密鍵です。|なし|
+|JWT_EXPIRATION|このサーバーが発行するJWTの有効期間です。|28800(8h)|
+|SIGNER|JWTの発行者のメールアドレスです。|なし|
+|SCEP_SERVER|SCEPサーバーのURLです。|なし|
+|COMMAND|証明書を取得するためのコマンドです。|./scepclient-linux-amd64|
+|CERTIFICATE|証明書のファイル名です。|/etc/pki/tls/certs/nssdc.crt|
+|PRIVAE_KEY|公開鍵のファイル名です。|/etc/pki/tls/private/nssdc.key|
+|EXPIRATION_TERM_SE|SE向けの証明書の有効期間です。|3y|
+|EXPIRATION_TERM_SYSTEM|システム向けの証明書の有効期間です。|6y|
+|TZ|タイムゾーンの設定です。|環境による|
+
+
+
+
 
 * サーバーの立ち上げ
 
@@ -69,7 +96,7 @@ DB_URLの形式に注意してください。<br>
 
 ```bash
 
-cd notes-server
+cd devices-server
 npm install
 npm start
 
@@ -85,7 +112,7 @@ npm start
 
 cd ~
 
-cd notes-client
+cd devices-client
 npm install
 npm start
 
@@ -101,9 +128,10 @@ npm start
 
 mongo
 
-use notes_db
+use devices_db
 
-db.admins.insert({"email":"test@com","pass":"hogehoge"})
+db.users.insert({"email":"test@com","pass":"hogehoge","role":"administrator"})
+db.users.insert({"email":"test2@com","pass":"hogehoge","role":"user"})
 
 ```
 
@@ -114,62 +142,47 @@ db.admins.insert({"email":"test@com","pass":"hogehoge"})
 ## Features
 
 ### DB構造
- * db : notes_db
- * collection1 : admins
- * collection2 : notes
+ * db : devices_db
+ * collection1 : users
+ * collection2 : devices
  
- #### adimins : 
+ #### userss : 
  
 ```bash
-	
-	noteSchema = new  Schema({
 
-	email:{type:String,reqiured:true},
-
-	pass:{type:String,reqiured:true}
-
-	});
+	usersSchema = new Schema({
+    email:{type:String,reqiured:true,unique: true},
+    pass:{type:String,reqiured:true},
+    role :{type:String,required:true} //0:admin 1:user
+});
 	
 ```
 	
- #### notes :
+ #### devices :
  
 ```bash
 	
-	noteSchema = new  Schema({
+	devicesSchema = new Schema({
+    csrGroup:{type:Number,reqiured:true},
+    CN:{type:String,reqiured:true},
+    email:{type:Array,reqiured:true},
+    type:{type:String,reqiured:true},
+    secret:{type:String,reqiured:true},
+    status:{type:String,reqiured:true},
+    expiration_date:{ type: Date, required:true},
+    pem:{type:String},
+    command:{type:String}
+});
 
-	csrID:{type:Number,reqiured:true},
-
-	csrGroup:{type:Number,reqiured:true},
-
-	CN:{type:String,reqiured:true},
-
-	email:{type:String,reqiured:true},
-
-	secret:{type:String,reqiured:true},
-
-	status:{type:String,reqiured:true},
-
-	expiration_date:{ type:  Date, required:true},
-
-	pem:{type:String}
-
-	});
 	
 ```
-	   
+	
 
-### CNに関して
-CSRのCNはRFC4514 Distinguished Name string (https://www.ietf.org/rfc/rfc4514.txt) に準拠します。
 
   
 
 ## Note
-
-* 開発段階で管理者の認証情報をDBに手動で登録しています。
-
   
-
 * APIでのDBの更新を後々開発します。
 
 
@@ -181,9 +194,8 @@ CSRのCNはRFC4514 Distinguished Name string (https://www.ietf.org/rfc/rfc4514.t
   
 
 ```bash
-<<<<<<< HEAD
 
-git@github.com:tasuku-revol/Verify-Admin.git
+git cloen git@github.com:Tasuku-Sasaki-lab/Verify-Admin.git
 cd Verify-admin
 
 ```
@@ -194,7 +206,7 @@ cd Verify-admin
 
 ```bash
 
-cd notes-server
+cd devices-server
 vim .env
 
 ```
@@ -203,14 +215,28 @@ vim .env
 
 ```bash
 
-JWT_KEY="hoge"
+JWT_KEY="hoge0123456789"
 export JWT_KEY
-JWT_KEY_SCEP="hoge"
-export JWT_KEY_SCEP
-DB_URL="mongodb://localhost:27017/notes_db"
+DB_URL="mongodb://localhost:27017/devices_db"
 export DB_URL
-SIGNER="hoge@hoge.com"
+SIGNER="test@test@com"
 export SIGNER
+COMMAND="./scepclient-linux-amd64"
+export COMMAND
+SCEP_SERVER="http://127.0.0.1:2016/scep"
+export SCEP_SERVER
+CERTIFICATE="/etc/pki/tls/certs/nssdc.crt"
+export CERTIFICATE
+PRIVAE_KEY="/etc/pki/tls/private/nssdc.key"
+export PRIVAE_KEY
+EXPIRATION_TERM_SE="3" 
+export EXPIRATION_TERM_SE
+EXPIRATION_TERM_SYSTEM="6" 
+export EXPIRATION_TERM_SYSTEM
+TZ="JST-9"
+export TZ
+JWT_EXPIRATION="28800"
+export JWT_EXPIRATION
 ```
 
 ```bash
@@ -221,47 +247,7 @@ source .env
 
 *  サーバー側の起動
 
-=======
 
-git@github.com:tasuku-revol/Verify-Admin.git
-cd Verify-admin
-
-```
-
-* Mongoの起動　(https://www.mongodb.com/)
-*  環境変数の設定
-
-
-```bash
-
-cd notes-server
-vim .env
-
-```
-
-テスト用のDB_URLは固定です。下記から変更しないでください。DB_URL以外はお好みに変更していただいても問題ありません。
-
-```bash
-
-JWT_KEY="hoge"
-export JWT_KEY
-JWT_KEY_SCEP="hoge"
-export JWT_KEY_SCEP
-DB_URL="mongodb://localhost:27017/notes_db"
-export DB_URL
-SIGNER="hoge@hoge.com"
-export SIGNER
-```
-
-```bash
-
-source .env
-
-```
-
-*  サーバー側の起動
-
->>>>>>> 68d1d481af36e76447d8bf9d6eb1fdbfb181c710
 ```bash
 
 npm start
@@ -273,13 +259,13 @@ npm start
 
 cd ../test
 pip install -r requirements.txt
-source ../notes-server/.env
+source ../devices-server/.env
 
 ```
 *  実行
 ```bash
 
-python3 testNotes-server.py
+python3 testDevices-server.py
 
 ```
   

@@ -4,9 +4,6 @@ module.exports = {
     //verify
     verify: async(request,reply) =>{
         try {
-            //const CN = request.body.Cn;
-            // translate into RFC4514 Distinguished Name string.
-            //CTEST1,OU=MDM,O=scep-client,C=US
             const CN = request.body.Cn;
             const device = await Device.findOne({"CN":CN});
             const date = new Date() ;

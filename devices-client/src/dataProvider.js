@@ -2,12 +2,8 @@ import { fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
 
 
-const apiUrl = "http://localhost:3000/api";
-/*
-impleRestProvider のコンストラクタの引数に httpClient を渡すことができる。 
-これにヘッダをいじる処理を実装して使うことでローカルで持っているクレデンシャルをAPIに
-ヘッダとして送ることができるようになる。
-*/
+const apiUrl ='http://localhost:3000/api';
+
 const httpClient = (url, options = {}) => {
   if (!options.headers) {
       options.headers = new Headers({ Accept: 'application/json' });

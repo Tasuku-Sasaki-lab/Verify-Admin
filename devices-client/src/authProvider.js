@@ -58,7 +58,16 @@ const authProvider = {
         }
     },
     // called when the user navigates to a new location, to check for permissions / roles
-    getPermissions: () => Promise.resolve(),
+    getPermissions: () => {  
+        const auth =  JSON.parse(localStorage.getItem('auth'));
+        if (auth == null) {
+            return Promise.reject();
+        }
+        const token = JSON.parse(localStorage.getItem('auth')).Token;
+        const base64 = token.split('.')[1]; 
+        const role = JSON.parse(window.atob(base64)).role;
+        return role ? Promise.resolve(role) : Promise.reject();
+    }
 };
 
 export default authProvider;

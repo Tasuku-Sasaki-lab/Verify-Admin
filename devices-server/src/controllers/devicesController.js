@@ -1,7 +1,10 @@
 const Device = require('../models/Devices');
+const scep_server =process.env.SCEP_SERVER;
 var command = process.env.COMMAND;
 var expiration_term_se = process.env.EXPIRATION_TERM_SE;
 var expiration_term_system = process.env.EXPIRATION_TERM_SYSTEM;
+var certificate = process.env.CERTIFICATE;
+var private_key = process.env.PRIVAE_KEY;
 
 function genCsrGroup(){
   return 1;
@@ -59,9 +62,15 @@ module.exports = {
         device["status"]="Waiting";
       }
       if(command == null){
-        command ="./getCertificate";
+        command ="./scepclient-linux-amd64";
       }
-      device["command"] =command +" -cn "+ deviceCN +" -secret " +   device["secret"];
+      if(certificate == null){
+        certificate = "etc/pki/tls/certs/nssdc.crt";
+      }
+      if(private_key == null){
+        private_key = "/etc/pki/tls/private/nssdc.key";
+      }
+      device["command"] =command + " -server-url="+ scep_server +" -cn "+ deviceCN +" -secret " +   device["secret"] + " -certificate " + certificate + " -private-key " + private_key;
       const newDevice = await Device.create(device);
       reply.code(201).send(newDevice);
     } catch (e) {
@@ -69,7 +78,6 @@ module.exports = {
     }
   },
   
-  //#get the list of devices
   //#get the list of devices
   fetch: async (request, reply) => {
     try {
@@ -101,7 +109,6 @@ module.exports = {
     }
   },
   
-  //#get a single device
 //#get a single device
 get: async (request, reply) => {
     try {
@@ -130,7 +137,6 @@ get: async (request, reply) => {
     }
   },
   
-  //#update a device
 //#update a device
 update: async (request, reply) => {
     try {
@@ -174,7 +180,6 @@ update: async (request, reply) => {
     }
   },
 
-  //#delete a device
 //#delete a device
 delete: async (request, reply) => {
     try {

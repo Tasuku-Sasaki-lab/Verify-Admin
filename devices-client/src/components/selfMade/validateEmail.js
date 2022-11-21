@@ -1,5 +1,5 @@
 const validateEmail = (value) => {
-    if (value == []) {
+    if (value === []) {
         console.log(value);
         return 'メールアドレスを入力してください。';
     }

@@ -1,21 +1,20 @@
 import React from 'react';
 import dataProvider from './dataProvider';
 import authProvider from './authProvider';
-import { Admin, Resource } from 'react-admin';
-import devicesList from './components/DevicesList';
-import devicesEdit from './components/DevicesEdit';
-import devicesCreate from './components/DevicesCreate';
+import { Admin, Resource,} from 'react-admin';
+import DevicesList from './components/DevicesList';
+import DevicesEdit from './components/DevicesEdit';
+import DevicesCreate from './components/DevicesCreate';
 
-// ここでユーザーの権限によって変えたらいいのかな
 
 function App() {
   return (
     <Admin dataProvider={dataProvider} authProvider={authProvider}>
       <Resource
         name="devices"
-        list={devicesList}
-        edit={devicesEdit}
-        create={devicesCreate}
+        list={DevicesList}
+        edit={DevicesEdit}
+        create={DevicesCreate}
       />
     </Admin>
   );
