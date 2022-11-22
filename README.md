@@ -97,7 +97,7 @@ export TZ
 
 ```bash
 
-cd devices-server
+source ./.env
 npm install
 npm start
 
