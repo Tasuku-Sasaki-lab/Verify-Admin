@@ -29,7 +29,7 @@ SCEPサーバー(https://github.com/Tasuku-Sasaki-lab/scep) に関連し、ユ�
 ```bash
 
 git clone git@github.com:Tasuku-Sasaki-lab/Verify-Admin.git
-cd Verify-admin
+cd Verify-Admin
 
 ```
 
