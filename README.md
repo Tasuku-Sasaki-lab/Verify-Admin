@@ -6,7 +6,7 @@ SCEPサーバー(https://github.com/Tasuku-Sasaki-lab/scep) に関連し、ユ�
 
 ## DEMO
 
-![スクリーンショット 2022-09-10 15 39 32](https://user-images.githubusercontent.com/74899466/189472401-6d365575-c32c-4f7e-92b5-b9a09757afd4.png)
+![スクリーンショット 2022-09-10 15 39 32](https://user-images.githubusercontent.com/74899466/203208855-5e6545e0-9dd1-4c22-b7ef-bfae5b274390.png)
 
 
   

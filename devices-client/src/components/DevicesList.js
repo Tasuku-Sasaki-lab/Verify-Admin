@@ -33,7 +33,6 @@ const DevicesList = (props) =>{
                 <TextField source="secret"/>
                 <CustomDateField source="expiration_date"></CustomDateField>
                 <TextField source="pem"/>
-                <TextField source="command" ></TextField>
                 <CopyTextField source="command"></CopyTextField>
                 <EditButton label="Edit" basepath= "devices" />
                 <DeleteButton label="Delete" basepath= "devices" />
@@ -55,7 +54,6 @@ const DevicesList = (props) =>{
                <TextField source="secret"/>
                <CustomDateField source="expiration_date"></CustomDateField>
                <TextField source="pem"/>
-               <TextField source="command" ></TextField>
                <CopyTextField source="command"></CopyTextField>
                <EditButton label="Edit" basepath= "devices" />
            </Datagrid>
