@@ -46,16 +46,18 @@ vim .env
 
 ```bash
 
-JWT_KEY="hoge0123456789"
-export JWT_KEY
 DB_URL="mongodb://localhost:27017/devices_db"
 export DB_URL
+JWT_KEY="hoge0123456789"
+export JWT_KEY
+JWT_EXPIRATION="28800"
+export JWT_EXPIRATION
 SIGNER="test@com"
 export SIGNER
-COMMAND="./scepclient-linux-amd64"
-export COMMAND
 SCEP_SERVER="http://127.0.0.1:2016/scep"
 export SCEP_SERVER
+COMMAND="./scepclient-linux-amd64"
+export COMMAND
 CERTIFICATE="/etc/pki/tls/certs/nssdc.crt"
 export CERTIFICATE
 PRIVAE_KEY="/etc/pki/tls/private/nssdc.key"
@@ -66,8 +68,7 @@ EXPIRATION_TERM_SYSTEM="6"
 export EXPIRATION_TERM_SYSTEM
 TZ="JST-9"
 export TZ
-JWT_EXPIRATION="28800"
-export JWT_EXPIRATION
+
 
 ```
 |環境変数名|詳細|デフォルト値|
@@ -214,17 +215,18 @@ vim .env
 テスト用のDB_URLは固定です。下記から変更しないでください。DB_URL以外はお好みに変更していただいても問題ありません。
 
 ```bash
-
-JWT_KEY="hoge0123456789"
-export JWT_KEY
 DB_URL="mongodb://localhost:27017/devices_db"
 export DB_URL
-SIGNER="test@test@com"
+JWT_KEY="hoge0123456789"
+export JWT_KEY
+JWT_EXPIRATION="28800"
+export JWT_EXPIRATION
+SIGNER="test@com"
 export SIGNER
-COMMAND="./scepclient-linux-amd64"
-export COMMAND
 SCEP_SERVER="http://127.0.0.1:2016/scep"
 export SCEP_SERVER
+COMMAND="./scepclient-linux-amd64"
+export COMMAND
 CERTIFICATE="/etc/pki/tls/certs/nssdc.crt"
 export CERTIFICATE
 PRIVAE_KEY="/etc/pki/tls/private/nssdc.key"
@@ -235,8 +237,6 @@ EXPIRATION_TERM_SYSTEM="6"
 export EXPIRATION_TERM_SYSTEM
 TZ="JST-9"
 export TZ
-JWT_EXPIRATION="28800"
-export JWT_EXPIRATION
 ```
 
 ```bash
