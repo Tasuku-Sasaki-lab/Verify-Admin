@@ -111,8 +111,6 @@ npm start
 
 ```bash
 
-cd ~
-
 cd devices-client
 npm install
 npm start
