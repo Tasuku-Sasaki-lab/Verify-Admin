@@ -50,7 +50,7 @@ JWT_KEY="hoge0123456789"
 export JWT_KEY
 DB_URL="mongodb://localhost:27017/devices_db"
 export DB_URL
-SIGNER="test@test@com"
+SIGNER="test@com"
 export SIGNER
 COMMAND="./scepclient-linux-amd64"
 export COMMAND
