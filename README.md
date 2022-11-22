@@ -81,8 +81,8 @@ export TZ
 |COMMAND|証明書を取得するためのコマンドです。|./scepclient-linux-amd64|
 |CERTIFICATE|証明書のファイル名です。|/etc/pki/tls/certs/nssdc.crt|
 |PRIVAE_KEY|公開鍵のファイル名です。|/etc/pki/tls/private/nssdc.key|
-|EXPIRATION_TERM_SE|SE向けの証明書の有効期間です。|3y|
-|EXPIRATION_TERM_SYSTEM|システム向けの証明書の有効期間です。|6y|
+|EXPIRATION_TERM_SE|SE向けの証明書の有効期間です。|3(y)|
+|EXPIRATION_TERM_SYSTEM|システム向けの証明書の有効期間です。|6(y)|
 |TZ|タイムゾーンの設定です。|環境による|
 
 
