@@ -70,7 +70,7 @@ module.exports = {
       if(private_key == null){
         private_key = "/etc/pki/tls/private/nssdc.key";
       }
-      device["command"] =command + " -server-url="+ scep_server +" -cn "+ deviceCN +" -secret " +   device["secret"] + " -certificate " + certificate + " -private-key " + private_key;
+      device["command"] =command + " -server-url="+ scep_server +" -cn "+ deviceCN +" -challenge " +   device["secret"] + " -certificate " + certificate + " -private-key " + private_key;
       const newDevice = await Device.create(device);
       reply.code(201).send(newDevice);
     } catch (e) {
