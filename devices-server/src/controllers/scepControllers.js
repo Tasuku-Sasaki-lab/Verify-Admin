@@ -18,6 +18,8 @@ module.exports = {
                 return;
             }
             else{
+                device.status="Completed";
+                await device.save();
                 reply.code(200).send();
             }
         
