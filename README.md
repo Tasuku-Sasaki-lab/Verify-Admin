@@ -15,7 +15,17 @@ flowchart LR
 	id5 -. 管理者のデバイス情報変更　.-> id2
  ```  	
 
-  
+## UseCase and FlowChart
+![verify-admin-usecase drawio](https://user-images.githubusercontent.com/74899466/204207710-d116f401-8b15-472a-9647-186777ffe4cf.svg)
+```mermaid
+flowchart LR
+	id1(スタート) -- 無条件 --> id2(証明書発行待ち:Waiting) -- ユーザーのコマンド起動 -->  id3(発行済み:Completed) 
+	id3  -- 時間経過　--> id4(有効期限切れ:Completed)
+	id2 -- 時間経過 --> id5(シークレット期限切れ:Expired)
+	id5 -. 管理者のデバイス情報変更　.-> id2
+   	
+```
+
 
 ## Environment
 
