@@ -9,7 +9,8 @@ SCEPサーバー(https://github.com/Tasuku-Sasaki-lab/scep) に関連し、ユ�
 ![スクリーンショット 2022-09-10 15 39 32](https://user-images.githubusercontent.com/74899466/203208855-5e6545e0-9dd1-4c22-b7ef-bfae5b274390.png)
 
 
-  
+## UseCase
+![スクリーンショット 2022-09-10 15 39 32](https://user-images.githubusercontent.com/74899466/204202028-d87eeb4c-0cdc-44b8-988b-c7d2d70d5e7f.png)
 
 ## Environment
 
