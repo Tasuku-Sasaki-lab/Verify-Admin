@@ -9,8 +9,17 @@ SCEPサーバー(https://github.com/Tasuku-Sasaki-lab/scep) に関連し、ユ�
 ![スクリーンショット 2022-09-10 15 39 32](https://user-images.githubusercontent.com/74899466/203208855-5e6545e0-9dd1-4c22-b7ef-bfae5b274390.png)
 
 
-## UseCase
-![スクリーンショット 2022-09-10 15 39 32](https://user-images.githubusercontent.com/74899466/204202028-d87eeb4c-0cdc-44b8-988b-c7d2d70d5e7f.png)
+## UseCase and FlowChart
+![verify-admin-usecase drawio](https://user-images.githubusercontent.com/74899466/204207710-d116f401-8b15-472a-9647-186777ffe4cf.svg)
+```mermaid
+flowchart LR
+	id1(スタート) -- 無条件 --> id2(証明書発行待ち:Waiting) -- ユーザーのコマンド起動 -->  id3(発行済み:Completed) 
+	id3  -- 時間経過　--> id4(有効期限切れ:Completed)
+	id2 -- 時間経過 --> id5(シークレット期限切れ:Expired)
+	id5 -. 管理者のデバイス情報変更　.-> id2
+   	
+```
+
 
 ## Environment
 
