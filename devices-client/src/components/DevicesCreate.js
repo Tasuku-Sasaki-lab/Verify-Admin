@@ -41,7 +41,6 @@ const DevicesCreate = (props) =>{
                                     { id: 'Waiting', name: 'Waiting' },
                                     { id: 'Expired', name: 'Expired' },
                                     { id: 'Completed', name: 'Completed' },
-                                    { id: 'Canceled', name: 'Canceled'}
                                     ]} />
                                 </Box>
                             <Box flex={3} mr={{ xs: 0, sm: '0.5em' }}>

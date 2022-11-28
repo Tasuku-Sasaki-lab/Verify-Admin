@@ -30,6 +30,15 @@ function genExpiration(type)
 	return date;
 }
 
+async function checkExpired(device){
+  const date = new Date();
+  if (date > device.expiration_date && device.status ==="Waiting"){
+    device.status="Expired";
+    device.save();
+  }
+  return device;
+}
+
 module.exports = {
   //# create a device
   create: async (request, reply) => {
@@ -82,19 +91,22 @@ module.exports = {
   fetch: async (request, reply) => {
     try {
       const decorded = request.decorded;
+      let deviceToFetch=[];
       switch (decorded.role){
         case "administrator":
           const devices = await Device.find({});
-          reply.code(200).send(devices); 
+          for (const device of devices){
+            deviceToFetch.push(await checkExpired(device));
+          }
+          reply.code(200).send(deviceToFetch); 
           return;
         case "user":
           const useremail = decorded.sub;
-          let deviceToFetch=[];
           const devices_user = await Device.find({});
           for (const device of devices_user) {
             for (const email_children of device["email"]){
               if(email_children["email-children"] == useremail){
-                deviceToFetch.push(device);
+                deviceToFetch.push(await checkExpired(device));
               }
             }
           }
