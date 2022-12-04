@@ -10,7 +10,7 @@ SCEPサーバー(https://github.com/Tasuku-Sasaki-lab/scep) に関連し、ユ�
  	
 
 ## UseCase and FlowChart
-![verify-admin-usecase drawio](https://user-images.githubusercontent.com/74899466/204207710-d116f401-8b15-472a-9647-186777ffe4cf.svg)
+![verify-admin-usecase drawio](https://user-images.githubusercontent.com/74899466/205476052-fa80661e-9495-49f8-bbd8-b47cd2f7b9b3.svg)
 ```mermaid
 flowchart LR
 	id1(スタート) -- 無条件 --> id2(証明書発行待ち:Waiting) -- 時間経過 --> id3(シークレット期限切れ:Expired)

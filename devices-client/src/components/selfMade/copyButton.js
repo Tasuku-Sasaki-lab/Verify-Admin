@@ -54,11 +54,10 @@ const CopyTextField = (source) => {
   const [wasCopied, setWasCopied] = useState(false);
   const handleMouseLeave = useCallback(() => setWasCopied(false), []);
   const handleCopied = useCallback(() => setWasCopied(true), []);
-  console.log(record);
   if (!record) {
     return null;
   }
-  const text = record.command;
+  const text = record[source.source];
   if(!text){
     return null;
   }
