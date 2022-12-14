@@ -49,7 +49,6 @@ const DevicesCreate = (props) =>{
                         </Box>
                         <TextInput required source="CN"  fullWidth/>
                         <TextInput required source="secret" fullWidth/>
-                        <TextInput source="pem" fullWidth multiline/>
                     </SimpleForm>
                 }  
 

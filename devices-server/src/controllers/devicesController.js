@@ -81,7 +81,7 @@ module.exports = {
       }
       device["command"] =command + " -server-url="+ scep_server +" -cn "+ deviceCN +" -challenge " +   device["secret"] + " -certificate " + certificate + " -private-key " + private_key;
       const newDevice = await Device.create(device);
-      reply.code(201).send(newDevice);
+      reply.code(200).send(newDevice);
     } catch (e) {
       reply.code(500).send(e);
     }
@@ -159,6 +159,7 @@ update: async (request, reply) => {
       const device = await Device.findById(deviceId);
       if(device == null){
         reply.code(500).send(Error("This id is wrong"));
+        return;
       }
       if(updates.email.length==0){
         reply.code(406).send(Error("Email should not be empty"));

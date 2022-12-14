@@ -8,7 +8,8 @@ module.exports = {
             const device = await Device.findOne({"CN":CN});
             const date = new Date() ;
             if (device == null){
-                reply.code(400).send({message:"The common name is not mathched"})
+                reply.code(400).send({message:"The common name is not mathched"});
+                return;
             }
             else if (request.body.Secret != device.secret){
                 reply.code(401).send({message:"The challenge password is wrong"})
@@ -18,8 +19,6 @@ module.exports = {
                 return;
             }
             else{
-                device.status="Completed";
-                await device.save();
                 reply.code(200).send();
             }
         

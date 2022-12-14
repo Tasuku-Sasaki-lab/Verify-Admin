@@ -13,6 +13,7 @@ import {
 } from 'react-admin';
 import CustomDateField from "./selfMade/customDatafield";
 import CopyTextField from "./selfMade/copyButton";
+import DetailFields from "./selfMade/detailFields";
 
 const DevicesList = (props) =>{
     const  { isLoading, permissions }  = usePermissions();
@@ -32,8 +33,11 @@ const DevicesList = (props) =>{
                 <TextField source="status"/>
                 <TextField source="secret"/>
                 <CustomDateField source="expiration_date"></CustomDateField>
-                <TextField source="pem"/>
                 <CopyTextField source="command"></CopyTextField>
+                <DetailFields source="pem"></DetailFields>
+                <NumberField source="serial"></NumberField>
+                <CustomDateField source="cert_not_before"></CustomDateField>
+                <CustomDateField source="cert_not_after"></CustomDateField>
                 <EditButton label="Edit" basepath= "devices" />
                 <DeleteButton label="Delete" basepath= "devices" />
             </Datagrid>   
@@ -52,9 +56,10 @@ const DevicesList = (props) =>{
                <TextField source="type"/>                
                <TextField source="status"/>
                <TextField source="secret"/>
-               <CustomDateField source="expiration_date"></CustomDateField>
-               <TextField source="pem"/>
+               <CustomDateField source="expiration_date" ></CustomDateField>
                <CopyTextField source="command"></CopyTextField>
+               <CustomDateField source="cert_not_before"></CustomDateField>
+               <CustomDateField source="cert_not_after"></CustomDateField>
                <EditButton label="Edit" basepath= "devices" />
            </Datagrid>
             }

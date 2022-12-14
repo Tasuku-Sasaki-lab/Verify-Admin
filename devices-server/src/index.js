@@ -6,6 +6,8 @@ const contentRangeHook = require('./hooks/contentRangeHook');
 const jwtVerifyHook = require('./hooks/jwtVerifyHook');
 const adminRoutes = require('./routes/adminRoutes');
 const scepRoutes = require('./routes/scepRoutes');
+const userRoutes = require('./routes/userRoutes');
+const certRoutes  =require('./routes/certRoutes');
 
 try {
   const url = process.env.DB_URL
@@ -24,6 +26,8 @@ app.addHook('preHandler', contentRangeHook);
 adminRoutes(app);
 deviceRoutes(app);
 scepRoutes(app);
+userRoutes(app);
+certRoutes(app);
 
 app.listen(5000, (err, address) => {
   if (err) {

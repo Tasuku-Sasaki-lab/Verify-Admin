@@ -60,7 +60,7 @@ const DevicesEdit =(props) =>{
                     </Box>
                     <TextInput required source="CN"  fullWidth/>
                     <TextInput required source="secret" fullWidth/>
-                    <TextInput source="pem" fullWidth multiline/>
+                    <TextInput source="pem" fullWidth multiline disabled/>
                     <TextInput source="command" disabled fullWidth></TextInput>           
                 </SimpleForm>
             }
@@ -99,7 +99,7 @@ const DevicesEdit =(props) =>{
                     </Box>
                     <TextInput required source="CN" disabled fullWidth/>
                     <TextInput required source="secret" disabled fullWidth/>
-                    <TextInput disabled source="pem" fullWidth multiline/>
+                    <TextInput disabled source="pem" fullWidth multiline />
                     <TextInput source="command" disabled fullWidth></TextInput>
                 </SimpleForm>
             }
