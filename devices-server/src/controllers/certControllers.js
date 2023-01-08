@@ -1,20 +1,27 @@
 const Device = require('../models/Devices');
+const ocspControllers = require('./ocspControllers');
 
 module.exports = {
     //distribute
     distribute: async(request,reply) =>{
         try{
+            const cert = request.body.Cert;
             const deviceCN = request.body.Name;
             const allowRenewalDays = request.body.AllowTime;
-            const serialNumber = request.body.SerialNumber;
-            const notBefore = request.body.NotBefore;
+            const serialNumber = cert.SerialNumber;
+            const notBefore = cert.NotBefore;
             const dateNotBefore = new Date(notBefore);
-            const notAfter = request.body.NotAfter;
+            const notAfter = cert.NotAfter;
             const dateNotAfter = new Date(notAfter);
             const pem = request.body.Pem;
+
+            if (deviceCN!=cert.Subject.CommonName){
+                reply.code(400).send({message:"The common name is not valid"});
+                return;
+            }
             const device = await Device.findOne({"CN" :deviceCN});
             if (device == null){
-                reply.code(400).send({message:"The common name is not mathched"});
+                reply.code(400).send({message:"The common name is not mathched on DB"});
                 return;
             }
             //初回の発行
@@ -25,6 +32,9 @@ module.exports = {
                 device.cert_not_before = dateNotBefore;
                 device.cert_not_after = dateNotAfter;
                 device.status="Completed";
+                //ここでCA局の管理に登録かな
+
+
                 await device.save();
                 reply.code(200).send(true);
                 return;

@@ -49,17 +49,37 @@ module.exports = {
         return;
       }
       const device = request.body;
+      if(device.email == null){
+        reply.code(406).send(Error("Email should not be empty"));
+        return;
+      }
       if (decorded.role == "user"){
         device["email"].push({"email-children":decorded.sub});
       }
       if(device.email.length==0){
         reply.code(406).send(Error("Email should not be empty"));
-        return ;
+        return;
+      }
+      if (device["type"] == null){
+        reply.code(406).send(Error("Type should not be empty"));
+        return;
+      }
+      if (!(device["type"] == "SE" ||  device["type"]=="System")){
+        reply.code(406).send(Error("Type malformed"));
+        return;
+      }
+      if(device["status"] != null && !(device["status"] == "Waiting" || device["status"] == "Expired" || device["status"] =="Complete")){
+        reply.code(406).send(Error("Status malformed"));
+        return;
       }
       const deviceCN = device.CN;
+      if (deviceCN == null){
+        reply.code(406).send(Error("CN should not be empty"));
+        return;
+      }
       if (await Device.findOne({"CN" :deviceCN})){
         reply.code(409).send(Error("This CN is already used"));
-        return ;
+        return;
       }
       if(device["csrGroup"]== null){
         device["csrGroup"]=genCsrGroup();
@@ -127,6 +147,10 @@ get: async (request, reply) => {
       const deviceId = request.params.id;
       const decorded = request.decorded;
       const device = await Device.findById(deviceId);
+      if(device == null){
+        reply.code(406).send(Error("This ID is wrong"));
+        return;
+      }
       switch (request.decorded.role){
         case "administrator":
           reply.code(200).send(device);
@@ -161,11 +185,19 @@ update: async (request, reply) => {
         reply.code(500).send(Error("This id is wrong"));
         return;
       }
+      if(updates.email == null){
+        reply.code(406).send(Error("Email should not be empty"));
+        return;
+      }
       if(updates.email.length==0){
         reply.code(406).send(Error("Email should not be empty"));
         return ;
       }
       const deviceCN = updates.CN;
+      if (deviceCN == null){
+        reply.code(406).send(Error("CN should not be empty"));
+        return;
+      }
       const deviceByCN = await Device.findOne({"CN" :deviceCN});
       if (deviceByCN != null && deviceId != deviceByCN.id){
         reply.code(409).send(Error("This CN is already used"));
@@ -199,6 +231,10 @@ delete: async (request, reply) => {
       if(request.decorded.role == "administrator"){
         const deviceId = request.params.id;
         const deviceToDelete = await Device.findById(deviceId);
+        if( deviceToDelete == null){
+          reply.code(500).send(Error("This id is wrong"));
+          return;
+        }
         await Device.findByIdAndDelete(deviceId);
         reply.code(200).send({ data: deviceToDelete });
         return;
@@ -214,6 +250,10 @@ delete: async (request, reply) => {
   try {
     if(request.decorded.role == "administrator"){
       const deviceIds = request.body;
+      if (deviceIds.length == 0){
+        reply.code(406).send(Error("Email should not be empty"));
+        return ;
+      }
       let deviceToDeletes=[];
       for (const deviceId of deviceIds){
         const deviceToDelete = await Device.findById(deviceId);

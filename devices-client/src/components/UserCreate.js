@@ -18,7 +18,7 @@ const UserCreate = (props) => {
         <Create {...props}>
             <SimpleForm>
                 <TextInput required source="email" type="Email" validate={validateEmail} ></TextInput>
-                <TextInput required source="pass" ></TextInput>
+                <TextInput required source="pass" label="Password"></TextInput>
                 < SelectInput required source="role"  choices={[
                                     { id: 'user', name: 'user' },
                                     { id: 'administrator', name: 'administrator' },

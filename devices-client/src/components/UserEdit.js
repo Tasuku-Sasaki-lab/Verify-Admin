@@ -19,7 +19,7 @@ const UserEdit = (props) => {
             <SimpleForm>
                 <TextInput  source ="_id" disabled  />
                 <TextInput required source="email" type="Email" validate={validateEmail} ></TextInput>
-                <TextInput required source="pass" disabled></TextInput>
+                <TextInput required source="pass" label="Password" disabled></TextInput>
                 < SelectInput required source="role"  choices={[
                                     { id: 'user', name: 'user' },
                                     { id: 'administrator', name: 'administrator' },

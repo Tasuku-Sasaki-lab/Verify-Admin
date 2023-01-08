@@ -26,300 +26,10 @@ def testwrongURL():
 
     return 0
 
-def testAdminjwtVerifyHook(token,token_scep):
-    url ="http://localhost:5000"
-    data = {
-    'foo': 123,
-    }
-    headers = {
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'match\' of undefined"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except requests.HTTPError as e:
-        print(e.status_code)
-        print(e.text)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-    
-    headers = {
-        'authorization':"djifh"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-
-    headers = {
-        'authorization':"Bearer" + token
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-
-    headers = {
-        'authorization':"Bearer" +" "+ token +"=sasa"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-
-    headers = {
-        'authorization':"xBearer" +" "+ token +"=sasa"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-        
-    headers = {
-        'authorization':"Bearer" +" "+ token +"#"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-    
-    headers = {
-        'authorization':"Bearer"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-
-    headers = {
-        'authorization':"Bearer"+" " +"eyJhbGc"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"jwt malformed"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
- 
-    url ="http://localhost:5000/scep"
-    headers = {
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'match\' of undefined"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except requests.HTTPError as e:
-        print(e.status_code)
-        print(e.text)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-    
-    headers = {
-        'authorization':"djifh"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-
-    headers = {
-        'authorization':"Bearer" + token_scep
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-
-    headers = {
-        'authorization':"Bearer" +" "+ token_scep +"=sasa"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-
-    headers = {
-        'authorization':"xBearer" +" "+ token_scep +"=sasa"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-        
-    headers = {
-        'authorization':"Bearer" +" "+ token_scep +"#"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-    
-    headers = {
-        'authorization':"Bearer"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"Cannot read property \'0\' of null"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-
-    headers = {
-        'authorization':"Bearer"+" " +"eyJhbGc"
-    }
-    try:
-        r = requests.get(url, data=data,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"jwt malformed"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-    
-    return 0
-
-def testadminRoutes():
-    url = "http://localhost:5000/authenticate"
-    mongo = Mongo("mongodb://localhost:27017","notes_db","admins")
-    data ={"email":"test@jp.com","pass":"abc"}
-
-    mongo.deleteMany(data)
-
-    headers={}
-    payload ={"username":"test@jp.com","password":"abs_wrong"}
-    try:
-        r = requests.post(url, data=payload,headers=headers)
-        message ='{"statusCode":415,"code":"FST_ERR_CTP_INVALID_MEDIA_TYPE","error":"Unsupported Media Type","message":"Unsupported Media Type: application/x-www-form-urlencoded"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-    
-    headers={'Content-Type': 'application/json'}
-    try:
-        r = requests.post(url, data=payload,headers=headers)
-        message ='{"statusCode":400,"error":"Bad Request","message":"Unexpected token e in JSON at position 0"}'
-        message_2 ='{"statusCode":400,"error":"Bad Request","message":"Unexpected token u in JSON at position 0"}'
-        if r.text != message and r.text!=message_2:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-    
-    payload =json.dumps(payload)
-    try:
-        r = requests.post(url, data=payload,headers=headers)
-        message ='{"statusCode":400,"error":"Bad Request","message":"User doesn\'t exit"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-    
-    mongo.addOne(data)
-    try:
-        r = requests.post(url, data=payload,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"The password is wrong"}'
-        if r.text != message:
-            print("テストに失敗しました。")
-            exit(1)
-    except Exception as e:
-        print(e)
-        print("テスト中にエラーが生じました。")
-        exit(1)
-    mongo.deleteOne(data)
-    return 0
 
 def testnoteRoutes(token):
-    url = "http://localhost:5000/api/notes"
-    mongo = Mongo("mongodb://localhost:27017","notes_db","notes")
+    url = "http://localhost:5000/api/devices"
+    mongo = Mongo("mongodb://localhost:27017","devices_db","devices")
     mongo.deleteMany({"csrGroup" : 45})
     tdatetime = datetime.datetime.now()
     tstr = tdatetime.strftime('%Y/%m/%d')
@@ -397,11 +107,11 @@ def testnoteRoutes(token):
         print("テスト中にエラーが生じました。")
         exit(1)
     
-    url = "http://localhost:5000/api/notes/" + "686568"
+    url = "http://localhost:5000/api/devices/" + "686568"
     try:
         r = requests.get(url,headers=headers)
         mongo.deleteOne(data)
-        message ='{"statusCode":500,"error":"Internal Server Error","message":"Cast to ObjectId failed for value \\"686568\\" (type string) at path \\"_id\\" for model \\"notes\\""}'
+        message ='{"statusCode":500,"error":"Internal Server Error","message":"Cast to ObjectId failed for value \\"686568\\" (type string) at path \\"_id\\" for model \\"devices\\""}'
         if r.text != message:
             print("テストに失敗しました。")
             exit(1)
@@ -414,7 +124,7 @@ def testnoteRoutes(token):
     data={"csrID" : 1,"csrGroup" : 45, "email" : "test@gmail.com", "status" : "Waiting", "expiration_date" : tstr, "CN" : "CN=TEST1,OU=MDM,O=scep-client,C=US", "secret" : "pass", "pem" : "ewew"}
     mongo.addOne(data)
     note = mongo.getOne({"csrID" : 1})
-    url = "http://localhost:5000/api/notes/" + str(note['_id'])
+    url = "http://localhost:5000/api/devices/" + str(note['_id'])
     try:
         r = requests.get(url,headers=headers)
         mongo.deleteOne(data)
@@ -433,7 +143,7 @@ def testnoteRoutes(token):
     data={"csrID" : 2,"csrGroup" : 45, "email" : "test@gmail.com", "status" : "Waiting", "expiration_date" : tstr, "CN" : "CN=TEST1,OU=MDM,O=scep-client,C=S", "secret" : "pass", "pem" : "ewew"}
     mongo.addOne(data)
     _id = str(note['_id'])
-    url = "http://localhost:5000/api/notes/" + _id
+    url = "http://localhost:5000/api/devices/" + _id
     try:
         r = requests.get(url,headers=headers)
         mongo.deleteMany({"csrGroup" : 45})
@@ -450,7 +160,7 @@ def testnoteRoutes(token):
     mongo.addOne(data)
     note = mongo.getOne({"csrID" : 1})
     _id = str(note['_id'])
-    url = "http://localhost:5000/api/notes/" + _id
+    url = "http://localhost:5000/api/devices/" + _id
     payload={"csrID":1,"csrGroup" : 45, "email" : "test@gmail.com", "status" : "Expired", "expiration_date" : tstr, "CN" : "CN=TEST1,OU=MDM,O=scep-client,C=US", "secret" : "pass", "pem" : "ewew"} 
     payload =json.dumps(payload)
 
@@ -481,7 +191,7 @@ def testnoteRoutes(token):
     mongo.addOne(data)
     note = mongo.getOne({"csrID" : 1})
     _id = str(note['_id'])
-    url = "http://localhost:5000/api/notes/" + "edfedeedededededede"
+    url = "http://localhost:5000/api/devices/" + "edfedeedededededede"
     payload={"csrID":2,"csrGroup" : 45, "email" : "test@gmail.com", "status" : "Expired", "expiration_date" : tstr, "CN" : "CN=TEST1,OU=MDM,O=scep-client,C=USS", "secret" : "pass", "pem" : "ewew"} 
     payload =json.dumps(payload)
     try:
@@ -500,7 +210,7 @@ def testnoteRoutes(token):
     mongo.addOne(data)
     note = mongo.getOne({"csrID" : 1})
     _id = str(note['_id'])
-    url = "http://localhost:5000/api/notes/" + _id
+    url = "http://localhost:5000/api/devices/" + _id
     payload={"csrID":1,"csrGroup" : 45, "email" : "test@gmail.com", "status" : "Expired", "expiration_date" : tstr,  "secret" : "pass", "pem" : "ewew"} 
     payload =json.dumps(payload)
     try:
@@ -519,7 +229,7 @@ def testnoteRoutes(token):
     mongo.addOne(data)
     note = mongo.getOne({"csrID" : 1})
     _id = str(note['_id'])
-    url = "http://localhost:5000/api/notes/" + _id
+    url = "http://localhost:5000/api/devices/" + _id
     payload={"csrGroup" : 45, "email" : "test@gmail.com", "status" : "Expired", "expiration_date" : tstr, "CN" : "CN=TEST1,OU=MDM,O=scep-client,C=US", "secret" : "pass", "pem" : "ewew"} 
     payload =json.dumps(payload)
     try:
@@ -540,7 +250,7 @@ def testnoteRoutes(token):
     mongo.addOne(data_2)
     note = mongo.getOne({"csrID" : 2})
     _id = str(note['_id'])
-    url = "http://localhost:5000/api/notes/" + _id
+    url = "http://localhost:5000/api/devices/" + _id
     payload={"csrID" : 1,"csrGroup" : 45, "email" : "test@gmail.com", "status" : "Expired", "expiration_date" : tstr, "CN" : "CN=TEST1,OU=MDM,O=scep-client,C=US", "secret" : "pass", "pem" : "ewew"} 
     payload =json.dumps(payload)
 
@@ -562,7 +272,7 @@ def testnoteRoutes(token):
     mongo.addOne(data_2)
     note = mongo.getOne({"csrID" : 2})
     _id = str(note['_id'])
-    url = "http://localhost:5000/api/notes/" + _id
+    url = "http://localhost:5000/api/devices/" + _id
     payload={"csrID" : 1,"csrGroup" : 45, "email" : "test@gmail.com", "status" : "Expired", "expiration_date" : tstr, "CN" : "CN=TEST1,OU=MDM,O=scep-client,C=USS", "secret" : "pass", "pem" : "ewew"} 
     payload =json.dumps(payload)
     
@@ -580,7 +290,7 @@ def testnoteRoutes(token):
         exit(1)
 
 
-    url = "http://localhost:5000/api/notes/" +_id
+    url = "http://localhost:5000/api/devices/" +_id
     payload={"id":_id}
     payload =json.dumps(payload)
 
@@ -596,13 +306,13 @@ def testnoteRoutes(token):
         print("テスト中にエラーが生じました。")
         exit(1)
 
-    url = "http://localhost:5000/api/notes/" +"abc"
+    url = "http://localhost:5000/api/devices/" +"abc"
     payload={"id":_id}
     payload =json.dumps(payload)
 
     try:
         r = requests.delete(url,data=payload,headers=headers)
-        message ='{"statusCode":500,"error":"Internal Server Error","message":"Cast to ObjectId failed for value \\"abc\\" (type string) at path \\"_id\\" for model \\"notes\\""}'
+        message ='{"statusCode":500,"error":"Internal Server Error","message":"Cast to ObjectId failed for value \\"abc\\" (type string) at path \\"_id\\" for model \\"devices\\""}'
         if r.text != message:
             print("テストに失敗しました。")
             exit(1)
@@ -616,7 +326,7 @@ def testnoteRoutes(token):
     mongo.addOne(data)
     note = mongo.getOne({"csrID" : 1})
     _id = str(note['_id'])
-    url = "http://localhost:5000/api/notes/" +_id
+    url = "http://localhost:5000/api/devices/" +_id
     payload={"id":_id}
     payload =json.dumps(payload)
     try:
@@ -635,12 +345,12 @@ def testnoteRoutes(token):
     mongo.addOne(data)
     note = mongo.getOne({"csrID" : 1})
     _id = str(note['_id'])
-    url = "http://localhost:5000/api/notes/" +_id
+    url = "http://localhost:5000/api/devices/" +_id
     payload={"id":_id}
     payload =json.dumps(payload)
     data={"csrID" : 2,"csrGroup" : 45, "email" : "test@gmail.com", "status" : "Waiting", "expiration_date" : tstr, "CN" : "CN=TEST1,OU=MDM,O=scep-client,C=S", "secret" : "pass", "pem" : "ewew"}
     mongo.addOne(data)
-    url = "http://localhost:5000/api/notes/" + _id
+    url = "http://localhost:5000/api/devices/" + _id
     try:
         r = requests.delete(url,data=payload,headers=headers)
         mongo.deleteMany({"csrGroup" : 45})
@@ -666,7 +376,7 @@ def testnoteRoutes(token):
     note = mongo.getOne({"csrID" : 3})
     _id_3 = str(note['_id'])
 
-    url = "http://localhost:5000/api/notes"
+    url = "http://localhost:5000/api/devices"
     payload=[]
     payload.append(_id)
     payload.append(_id_2)
@@ -703,7 +413,7 @@ def testnoteRoutes(token):
     payload =json.dumps(payload)
     try:
         r = requests.delete(url,data=payload,headers=headers)
-        message ='{"statusCode":500,"error":"Internal Server Error","message":"Cast to ObjectId failed for value \\"abc\\" (type string) at path \\"_id\\" for model \\"notes\\""}'
+        message ='{"statusCode":500,"error":"Internal Server Error","message":"Cast to ObjectId failed for value \\"abc\\" (type string) at path \\"_id\\" for model \\"devices\\""}'
         if r.text != message:
             print("テストに失敗しました。")
             exit(1)
@@ -717,7 +427,7 @@ def testnoteRoutes(token):
  
 def testscepRoutes(token):
     url = "http://localhost:5000/scep"
-    mongo = Mongo("mongodb://localhost:27017","notes_db","notes")
+    mongo = Mongo("mongodb://localhost:27017","devices_db","devices")
     mongo.deleteMany({"csrGroup" : 45})
     tdatetime = datetime.datetime.now()
     tstr = tdatetime.strftime('%Y/%m/%d')
@@ -811,29 +521,7 @@ def testscepRoutes(token):
         exit(1)
     return 0
 
-def getToken(jwt_key,jwt_key_scep):
-    miriSecondNow = time.time()
-    nbf = math.floor( miriSecondNow) 
-    exp = nbf + 8*60*60 #exp = 8h
-    signer = os.environ['SIGNER']
-    jwtPayload = {
-        "iss": signer,
-        "sub": "testuser",
-        "exp": exp,
-        "nbf": nbf,
-    }
-    token = jwt.encode(jwtPayload, jwt_key, algorithm="HS256")
 
-    exp = nbf + 10*365*24*60*60 #exp = 10y
-    signer = os.environ['SIGNER']
-    jwtPayload = {
-        "iss": signer,
-        "sub": "testuser",
-        "exp": exp,
-        "nbf": nbf,
-    }
-    token_scep = jwt.encode(jwtPayload, jwt_key_scep, algorithm="HS256")
-    return token,token_scep
     
 
 def main ():

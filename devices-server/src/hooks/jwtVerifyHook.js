@@ -16,11 +16,12 @@ module.exports = async (request, reply)=>{
         const role = decorded.role;
         const roles = ["administrator","user","scepserver"];
         if (roles.indexOf(role) == -1){
-          reply.code(401)
-          next(new Error('You do not have any roles'));
+          reply.code(401).send(new Error('You do not have any roles'));
+          return;
         }
       } catch(err) {
         console.log( `ERROR: err.message=[${err.message}]` );
         reply.code(401).send(err);
+        return;
       }
 };

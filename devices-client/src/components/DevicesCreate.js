@@ -44,7 +44,7 @@ const DevicesCreate = (props) =>{
                                     ]} />
                                 </Box>
                             <Box flex={3} mr={{ xs: 0, sm: '0.5em' }}>
-                            <DateTimeInput required source="expiration_date" fullWidth></DateTimeInput>
+                            <DateTimeInput  source="expiration_date" fullWidth></DateTimeInput>
                             </Box>
                         </Box>
                         <TextInput required source="CN"  fullWidth/>
