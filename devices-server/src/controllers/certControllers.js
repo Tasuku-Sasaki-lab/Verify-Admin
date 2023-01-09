@@ -1,5 +1,4 @@
 const Device = require('../models/Devices');
-const ocspControllers = require('./ocspControllers');
 
 module.exports = {
     //distribute
