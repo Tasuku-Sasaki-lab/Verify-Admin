@@ -27,6 +27,7 @@
     "lib": "^4.3.3",
     "mongoose": "^5.13.15",
     "nodemon": "^2.0.4",
+    "secure-json-parse": "^2.6.0",
     "semver": "^7.3.8",
     "uuid": "^9.0.0"
   },
