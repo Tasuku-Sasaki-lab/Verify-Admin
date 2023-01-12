@@ -9,6 +9,7 @@ import {
 } from 'react-admin';
 
 const UserList = (props) =>{
+    console.log(props)
     return (
         <List {...props}>
             <Datagrid>

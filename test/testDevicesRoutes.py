@@ -800,7 +800,7 @@ def testDeleteMany(token_admin,token_user):
 
     try:
         r = requests.delete(url,data=payload,headers=headers)
-        message ='{"statusCode":401,"error":"Unauthorized","message":"You cannot access to the device"}'
+        message ='{"statusCode":401,"error":"Unauthorized","message":"You cannot access to the devices"}'
         if r.text != message:
             print("テストに失敗しました。")
             exit(1)
@@ -834,7 +834,7 @@ def testDeleteMany(token_admin,token_user):
     payload =json.dumps(data)
     try:
         r = requests.delete(url,data=payload,headers=headers)
-        message='{"statusCode":406,"error":"Not Acceptable","message":"Email should not be empty"}' 
+        message='{"statusCode":406,"error":"Not Acceptable","message":"Ids should not be empty"}' 
         if r.text != message:
             print("テストに失敗しました。")
             exit(1)
@@ -892,8 +892,6 @@ def testDevicesRoutes(token_admin,token_user,token_scepserver):
     testFetch(token_admin,token_user,token_scepserver)
     testGet(token_admin,token_user,token_scepserver)
     testUpdate(token_admin,token_user,token_scepserver)
-    print("dssd")
     testDelete(token_admin,token_user)
-    print("ds")
     testDeleteMany(token_admin,token_user)
     return 0

@@ -251,7 +251,7 @@ delete: async (request, reply) => {
     if(request.decorded.role == "administrator"){
       const deviceIds = request.body;
       if (deviceIds.length == 0){
-        reply.code(406).send(Error("Email should not be empty"));
+        reply.code(406).send(Error("IDs should not be empty"));
         return ;
       }
       let deviceToDeletes=[];
@@ -263,7 +263,7 @@ delete: async (request, reply) => {
       reply.code(200).send(deviceToDeletes);
       return ;
     }
-    reply.code(401).send(Error("You cannot access to the device")); 
+    reply.code(401).send(Error("You cannot access to the devices")); 
   } catch (e) {
     reply.code(500).send(e);
   }

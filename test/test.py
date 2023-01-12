@@ -5,6 +5,9 @@ import time
 import testJwtVerifyHook
 import testAdminRoutes
 import testDevicesRoutes
+import testScepRoutes
+import testUserRoutes
+import testCertRoutes
 
 def getToken(jwt_key):
     miriSecondNow = time.time()
@@ -57,7 +60,12 @@ def main ():
     token_admin,token_user,token_scepserver,token_wrong= getToken(jwt_key)
     #testJwtVerifyHook.testJwtVerifyHook(token_admin,token_wrong)
     #testAdminRoutes.testAdminRoutes()
-    testDevicesRoutes.testDevicesRoutes(token_admin,token_user,token_scepserver)
+    #testDevicesRoutes.testDevicesRoutes(token_admin,token_user,token_scepserver)
+    #testScepRoutes.testScepRoutes(token_admin)
+    #testuserroutes
+    #testcertRoute
+    testUserRoutes.testUserRoutes(token_admin,token_user)
+    testCertRoutes.testCertRoutes(token_admin)
     print("テストは正常に終了しました。")
 
 if __name__ == '__main__':
