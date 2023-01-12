@@ -178,9 +178,12 @@ db.users.insert({"email":"test2@com","pass":"hogehoge","role":"user"})
     type:{type:String,reqiured:true},
     secret:{type:String,reqiured:true},
     status:{type:String,reqiured:true},
-    expiration_date:{ type: Date, required:true},
+    expiration_date:{type:Date,required:true},
     pem:{type:String},
-    command:{type:String}
+    command:{type:String},
+    serial:{type:Number},
+    cert_not_before:{type:Date},
+    cert_not_after:{type:Date},
 });
 
 	
