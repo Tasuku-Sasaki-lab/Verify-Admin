@@ -12,7 +12,7 @@ import testCertRoutes
 def getToken(jwt_key):
     miriSecondNow = time.time()
     nbf = math.floor( miriSecondNow) 
-    exp = nbf + 8*60*60 #exp = 8h
+    exp = nbf + 8*60*60 #exp = 8h 
     signer = os.environ['SIGNER']
     jwtPayload = {
         "iss": signer,
@@ -58,14 +58,14 @@ def main ():
         exit(1)
 
     token_admin,token_user,token_scepserver,token_wrong= getToken(jwt_key)
-    #testJwtVerifyHook.testJwtVerifyHook(token_admin,token_wrong)
-    #testAdminRoutes.testAdminRoutes()
-    #testDevicesRoutes.testDevicesRoutes(token_admin,token_user,token_scepserver)
-    #testScepRoutes.testScepRoutes(token_admin)
-    #testuserroutes
-    #testcertRoute
+    testJwtVerifyHook.testJwtVerifyHook(token_admin,token_wrong)
+    testAdminRoutes.testAdminRoutes()
+    testDevicesRoutes.testDevicesRoutes(token_admin,token_user,token_scepserver)
+    testScepRoutes.testScepRoutes(token_scepserver)
+    testuserroutes
+    testcertRoute
     testUserRoutes.testUserRoutes(token_admin,token_user)
-    testCertRoutes.testCertRoutes(token_admin)
+    #testCertRoutes.testCertRoutes(token_scepserver)
     print("テストは正常に終了しました。")
 
 if __name__ == '__main__':

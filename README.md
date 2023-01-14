@@ -276,7 +276,7 @@ source ../devices-server/.env
 *  実行
 ```bash
 
-python3 testDevices-server.py
+python3 test.py
 
 ```
   

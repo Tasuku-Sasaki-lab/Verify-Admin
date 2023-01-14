@@ -31,9 +31,6 @@ module.exports = {
                 device.cert_not_before = dateNotBefore;
                 device.cert_not_after = dateNotAfter;
                 device.status="Completed";
-                //ここでCA局の管理に登録かな
-
-
                 await device.save();
                 reply.code(200).send(true);
                 return;
