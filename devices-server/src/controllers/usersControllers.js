@@ -91,7 +91,8 @@ module.exports ={
             if (!(updates.role == "administrator" || updates.role=="user")){
                 reply.code(406).send(Error("Role malformed"));
                 return;
-              }
+            }
+            
             await User.findByIdAndUpdate(userId, updates);
             const userToUpdate = await User.findById(userId);
             reply.code(200).send(userToUpdate);

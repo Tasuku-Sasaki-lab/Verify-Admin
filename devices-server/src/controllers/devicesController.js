@@ -72,13 +72,27 @@ module.exports = {
         reply.code(406).send(Error("Status malformed"));
         return;
       }
-      const deviceCN = device.CN;
-      if (deviceCN == null){
+      const deviceCNPre = device.CN;
+      if (deviceCNPre == null){
+        reply.code(406).send(Error("CN should not be empty"));
+        return;
+      }
+      const deviceCN = deviceCNPre.replace(/\s+/g, "");
+      if (deviceCN == ""){
         reply.code(406).send(Error("CN should not be empty"));
         return;
       }
       if (await Device.findOne({"CN" :deviceCN})){
         reply.code(409).send(Error("This CN is already used"));
+        return;
+      }
+      if (device["secret"] == null){
+        reply.code(406).send(Error("Secret should not be empty"));
+        return;
+      }
+      var secret  = device["secret"].replace(/\s+/g, "");
+      if (secret == ""){
+        reply.code(406).send(Error("Secret should not be empty"));
         return;
       }
       if(device["csrGroup"]== null){
@@ -99,8 +113,11 @@ module.exports = {
       if(private_key == null){
         private_key = "/etc/pki/tls/private/nssdc.key";
       }
-      device["command"] =command + " -server-url="+ scep_server +" -cn "+ deviceCN +" -challenge " +   device["secret"] + " -certificate " + certificate + " -private-key " + private_key;
-      const newDevice = await Device.create(device);
+      device["command"] =command + " -server-url="+ scep_server +" -cn "+ deviceCN +" -challenge " +   secret + " -certificate " + certificate + " -private-key " + private_key;
+      var createData = device
+      createData['CN'] = deviceCN
+      createData['secret'] = secret
+      const newDevice = await Device.create(createData);
       reply.code(200).send(newDevice);
     } catch (e) {
       reply.code(500).send(e);
@@ -193,8 +210,13 @@ update: async (request, reply) => {
         reply.code(406).send(Error("Email should not be empty"));
         return ;
       }
-      const deviceCN = updates.CN;
-      if (deviceCN == null){
+      const deviceCNPre = updates.CN;
+      if (deviceCNPre == null){
+        reply.code(406).send(Error("CN should not be empty"));
+        return;
+      }
+      const deviceCN = deviceCNPre.replace(/\s+/g, "");
+      if (deviceCN == ""){
         reply.code(406).send(Error("CN should not be empty"));
         return;
       }
@@ -203,6 +225,30 @@ update: async (request, reply) => {
         reply.code(409).send(Error("This CN is already used"));
         return ;
       }
+      if (updates["secret"] == null){
+        reply.code(406).send(Error("Secret should not be empty"));
+        return;
+      }
+      var secret  = updates["secret"].replace(/\s+/g, "");
+      if (secret == ""){
+        reply.code(406).send(Error("Secret should not be empty"));
+        return;
+      }
+      // commande は　CNとsecrete 変更の影響を受ける
+      if(command == null){
+        command ="./scepclient-linux-amd64";
+      }
+      if(certificate == null){
+        certificate = "etc/pki/tls/certs/nssdc.crt";
+      }
+      if(private_key == null){
+        private_key = "/etc/pki/tls/private/nssdc.key";
+      }
+      var updateData = updates;
+      updateData['CN'] = deviceCN
+      updateData['secret'] = secret
+      updateData["command"] =command + " -server-url="+ scep_server +" -cn "+ deviceCN +" -challenge " + secret + " -certificate " + certificate + " -private-key " + private_key;
+
       if(decorded.role == "administrator"){
         flag = true;
       }
@@ -214,7 +260,7 @@ update: async (request, reply) => {
         }
       }
       if(flag){
-        await Device.findByIdAndUpdate(deviceId, updates);
+        await Device.findByIdAndUpdate(deviceId, updateData);
         const deviceToUpdate = await Device.findById(deviceId);
         reply.code(200).send({ data: deviceToUpdate });
         return;

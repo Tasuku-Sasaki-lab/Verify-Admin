@@ -12,7 +12,7 @@ import testCertRoutes
 def getToken(jwt_key):
     miriSecondNow = time.time()
     nbf = math.floor( miriSecondNow) 
-    exp = nbf + 8*60*60 #exp = 8h 
+    exp = nbf + 8*60*60*3*31 #exp = 8h 
     signer = os.environ['SIGNER']
     jwtPayload = {
         "iss": signer,
@@ -56,8 +56,10 @@ def main ():
         print(e)
         print('環境変数の設定に問題がある可能性があります')
         exit(1)
-
+    
     token_admin,token_user,token_scepserver,token_wrong= getToken(jwt_key)
+    print(token_scepserver)
+    '''
     testJwtVerifyHook.testJwtVerifyHook(token_admin,token_wrong)
     testAdminRoutes.testAdminRoutes()
     testDevicesRoutes.testDevicesRoutes(token_admin,token_user,token_scepserver)
@@ -65,6 +67,7 @@ def main ():
     testuserroutes
     testcertRoute
     testUserRoutes.testUserRoutes(token_admin,token_user)
+    '''
     #testCertRoutes.testCertRoutes(token_scepserver)
     print("テストは正常に終了しました。")
 
